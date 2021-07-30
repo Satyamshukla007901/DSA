@@ -117,6 +117,58 @@ struct Node* reverseDLL(struct Node * head)
     }
     return prev;
 }
+//Find pair with a given sum in a doubly linked list
+//Time Limit Exceeded
+//O(n^2)
+//Not an optimised Approach
+bool findPair1(Node* head, int k)
+{
+    Node* i = head;
+    // Node* temp = head;
+    // while(temp->next)
+    // {
+    //     temp=temp->next;
+    // }
+    while(i)
+    {
+        Node* lo = i->next;
+        while(lo)
+        {
+            int sum = (i->data)+(lo->data);
+            // int sum2 = (i->data)+(hi->data);
+            if(k==sum)
+                return true;
+            lo=lo->next;
+        }
+        i=i->next;
+    }
+    return false;
+    // Write your code here.
+}
+//Optimised Approach
+//two pointer technique
+//TC-> O(n)
+bool findPair(Node* head, int k)
+{
+    Node* low = head;
+    Node* temp = head;
+    while(temp->next)
+    {
+        temp=temp->next;
+    }
+    Node* high = temp;
+    while(low!=high&&high->next!=low)
+    {
+        int sum = low->data + high->data;
+        if(sum==k)
+            return true;
+        else if(sum<k)
+            low=low->next;
+        else if(sum>k)
+            high=high->prev;
+    }
+    return false;
+}
 void printL(struct Node *head)
 {
     struct Node *temp = head;
