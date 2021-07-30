@@ -15,6 +15,7 @@ struct Node
 {
     int data;
     struct Node *next;
+    struct Node *prev;
     Node(int x)
     {
         data=x;
@@ -99,6 +100,22 @@ Node* deleteNode(Node* head, int key)
     // temp->next=head;
     return head;
     // Write your code here.
+}
+//Reverse a Double Linked List
+struct Node* reverseDLL(struct Node * head)
+{
+    struct Node* prev=NULL;
+    struct Node* curr=head;
+    struct Node* nxt;
+    while(curr)
+    {
+        nxt=curr->next;
+        curr->next=prev;
+        curr->prev = nxt;
+        prev=curr;
+        curr=nxt;
+    }
+    return prev;
 }
 void printL(struct Node *head)
 {
