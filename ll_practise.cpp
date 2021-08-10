@@ -578,6 +578,7 @@ void printL(struct Node *head)
 }
 int main()
 {
+    cout<<"HELLO AND WELCOME LINKEDLIST PRACTISE SESSION"<<endl;
     int n;
     cin >> n;
     vector<int> v(n);
