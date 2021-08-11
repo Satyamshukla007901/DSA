@@ -36,6 +36,22 @@ void inorder(Node* root)
     cout<<root->data<<" ";
     inorder(root->right);
 }
+//Search in BST
+//Time Complexity is O(logN)
+Node* searchInBST(Node* root,int key)
+{
+    if(!root)
+        return NULL;
+    
+    if(root->data==key){
+        return root;
+    }
+    if(key<root->data)
+    {
+        return searchInBST(root->left,key);
+    }
+    return searchInBST(root->right,key);
+}
 int32_t main()
 {
     Node* root = NULL;
@@ -47,4 +63,15 @@ int32_t main()
     insertBST(root,7);
     //Print Inorder
     inorder(root);
+    cout<<endl;
+    int x;
+    cin>>x;
+    if(searchInBST(root,x)==NULL)
+    {
+        cout<<"Key does'nt Exist"<<endl;
+    }
+    else
+    {
+        cout<<"key Exist"<<endl;
+    }
 }
