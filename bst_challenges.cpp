@@ -52,6 +52,48 @@ Node* searchInBST(Node* root,int key)
     }
     return searchInBST(root->right,key);
 }
+//Delete in BST
+//Function for finding inorder succesor
+Node* inorederSucc(Node* root)
+{
+    Node* curr = root;
+    while(curr&&curr->left!=NULL)
+    {
+        curr = curr->left;
+    }
+    return curr;
+}
+//function for deleting the node
+Node* deleteBST(Node* root,int key)
+{
+    if(key<root->data)
+    {
+        root->left = deleteBST(root->left,key);
+    }
+    else if(key>root->data)
+    {
+        root->right = deleteBST(root->right,key);
+    }
+
+    else{
+        if(root->left==NULL)
+        {
+            Node* temp = root->right;
+            free(root);
+            return temp;
+        }
+        else if(root->right==NULL)
+        {
+            Node* temp = root->left;
+            free(root);
+            return temp;
+        }
+        Node* temp = inorederSucc(root->right);
+        root->data = temp->data;
+        root->right = deleteBST(root->right,temp->data);
+    }
+    return root;
+}
 int32_t main()
 {
     Node* root = NULL;
@@ -66,12 +108,15 @@ int32_t main()
     cout<<endl;
     int x;
     cin>>x;
-    if(searchInBST(root,x)==NULL)
-    {
-        cout<<"Key does'nt Exist"<<endl;
-    }
-    else
-    {
-        cout<<"key Exist"<<endl;
-    }
+    // if(searchInBST(root,x)==NULL)
+    // {
+    //     cout<<"Key does'nt Exist"<<endl;
+    // }
+    // else
+    // {
+    //     cout<<"key Exist"<<endl;
+    // }
+    root = deleteBST(root,x);
+    inorder(root);
+
 }
