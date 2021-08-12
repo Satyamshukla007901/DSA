@@ -129,6 +129,7 @@ void preorder(Node* root)
 }
 int32_t main()
 {
+cout<<"hello I  am Satyam Shukla"<<"\n";
     Node* root = NULL;
     root = insertBST(root,5);
     insertBST(root,1);
