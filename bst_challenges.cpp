@@ -94,6 +94,39 @@ Node* deleteBST(Node* root,int key)
     }
     return root;
 }
+//Construct Binary Search tree from preorder Sequence
+Node* constructBST(int preorder[],int* preorderIdx,int key,int min,int max,int n)
+{
+    if(*preorderIdx>=n){return NULL;}
+
+    Node* root = NULL;
+    if(key>min&&key<max)
+    {
+        root = new Node(key);
+        *preorderIdx = *preorderIdx+1;
+
+        if(*preorderIdx<n)
+        {
+            root->left = constructBST(preorder,preorderIdx,preorder[*preorderIdx],min,key,n);
+        }
+        if(*preorderIdx<n)
+        {
+            root->right = constructBST(preorder,preorderIdx,preorder[*preorderIdx],key,max,n);
+        }
+    }
+    return root;
+}
+void preorder(Node* root)
+{
+    if(!root)
+    {
+        return;
+    }
+
+    cout<<root->data<<" ";
+    preorder(root->left);
+    preorder(root->right);
+}
 int32_t main()
 {
     Node* root = NULL;
@@ -103,11 +136,20 @@ int32_t main()
     insertBST(root,4);
     insertBST(root,2);
     insertBST(root,7);
-    //Print Inorder
+    /*
+        5
+       / \
+      1   7
+       \
+        3
+       / \
+      2   4
+    */
+    // Print Inorder
     inorder(root);
     cout<<endl;
-    int x;
-    cin>>x;
+    // int x;
+    // cin>>x;
     // if(searchInBST(root,x)==NULL)
     // {
     //     cout<<"Key does'nt Exist"<<endl;
@@ -116,7 +158,15 @@ int32_t main()
     // {
     //     cout<<"key Exist"<<endl;
     // }
-    root = deleteBST(root,x);
-    inorder(root);
+    // root = deleteBST(root,x);
+    // inorder(root);
+    preorder(root);
+    cout<<endl;
+    int preorder1[] = {5,1,3,2,4,7};
+    int n=6;
+    int preorderIdx = 0;
+    Node* root1 = constructBST(preorder1,&preorderIdx,preorder1[0],INT_MIN,INT_MAX,n);
+    preorder(root1);
+    cout<<endl;
 
 }
