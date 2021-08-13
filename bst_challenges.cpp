@@ -143,8 +143,54 @@ Node* sortedArrayToBst(vector<int> arr,int start,int end)
 
     return root;
 }
+//Catalan Numbers : High Time Complexity method
+int catalan(int n)
+{
+    if(n<=1)
+        return 1;
+
+    int res = 0;
+    for(int i=0;i<=n-1;i++)
+    {
+        res += catalan(i)*catalan(n-i-1);
+    }
+    return res;
+}
+//BST count using Catalan Concept
+vector<Node*> constructTrees(int start,int end)
+{
+    vector<Node*> trees;
+    if(start>end)
+    {
+        trees.push_back(NULL);
+        return trees;
+    }
+
+    for(int i = start;i<=end;i++)
+    {
+        vector<Node*> leftsubtrees = constructTrees(start,i-1);
+
+        vector<Node*> rightsubtrees = constructTrees(i+1,end);
+
+        for(int j=0;j<leftsubtrees.size();j++)
+        {
+            Node* left = leftsubtrees[j];
+            for(int k=0;k<rightsubtrees.size();k++)
+            {
+                Node* right = rightsubtrees[k];
+                Node* node = new Node(i);
+                node->left = left;
+                node->right = right;
+                trees.push_back(node);
+            }
+        }
+       
+    }
+     return trees;
+}
 int32_t main()
 {
+    
     // Node* root = NULL;
     // root = insertBST(root,5);
     // insertBST(root,1);
@@ -184,19 +230,19 @@ int32_t main()
     // Node* root1 = constructBST(preorder1,&preorderIdx,preorder1[0],INT_MIN,INT_MAX,n);
     // preorder(root1);
     // cout<<endl;
-    int n;
-    cin>>n;
-    vector<int> vp;
-    for(int i=0;i<n;i++)
-    {
-        int x;
-        cin>>x;
-        vp.push_back(x);
-    }
-    sort(vp.begin(),vp.end());
-    Node* root = sortedArrayToBst(vp,0,n-1);
-    preorder(root);
-    cout<<endl;
+    // int n;
+    // cin>>n;
+    // vector<int> vp;
+    // for(int i=0;i<n;i++)
+    // {
+    //     int x;
+    //     cin>>x;
+    //     vp.push_back(x);
+    // }
+    // sort(vp.begin(),vp.end());
+    // Node* root = sortedArrayToBst(vp,0,n-1);
+    // preorder(root);
+    // cout<<endl;
     /*
        30
       /  \
@@ -204,6 +250,22 @@ int32_t main()
        \    \
         20   50
     */
+    // for(int i=0;i<10;i++)
+    // {
+    //     cout<<catalan(i)<<" ";
+    // }
+    // cout<<endl;
+    // return 0;
+
+    vector<Node*> totalTrees = constructTrees(1,3);
+    // constructtrees(1,3);
+    for(int i=0;i<totalTrees.size();i++)
+    {
+        cout<<i+1<<" : ";
+        preorder(totalTrees[i]);
+        cout<<endl;
+    }
+    return 0;
 
 
 }
