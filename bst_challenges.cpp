@@ -127,16 +127,31 @@ void preorder(Node* root)
     preorder(root->left);
     preorder(root->right);
 }
+//Build BST from Sorted array
+Node* sortedArrayToBst(vector<int> arr,int start,int end)
+{
+    if(start>end){return NULL;}
+
+    int mid = (start+end)/2;
+    Node* root = new Node(arr[mid]);
+
+
+    root->left = sortedArrayToBst(arr,start,mid-1);
+
+    root->right = sortedArrayToBst(arr,mid+1,end);
+
+
+    return root;
+}
 int32_t main()
 {
-cout<<"hello I  am Satyam Shukla"<<"\n";
-    Node* root = NULL;
-    root = insertBST(root,5);
-    insertBST(root,1);
-    insertBST(root,3);
-    insertBST(root,4);
-    insertBST(root,2);
-    insertBST(root,7);
+    // Node* root = NULL;
+    // root = insertBST(root,5);
+    // insertBST(root,1);
+    // insertBST(root,3);
+    // insertBST(root,4);
+    // insertBST(root,2);
+    // insertBST(root,7);
     /*
         5
        / \
@@ -147,8 +162,8 @@ cout<<"hello I  am Satyam Shukla"<<"\n";
       2   4
     */
     // Print Inorder
-    inorder(root);
-    cout<<endl;
+    // inorder(root);
+    // cout<<endl;
     // int x;
     // cin>>x;
     // if(searchInBST(root,x)==NULL)
@@ -161,13 +176,34 @@ cout<<"hello I  am Satyam Shukla"<<"\n";
     // }
     // root = deleteBST(root,x);
     // inorder(root);
+    // preorder(root);
+    // cout<<endl;
+    // int preorder1[] = {5,1,3,2,4,7};
+    // int n=6;
+    // int preorderIdx = 0;
+    // Node* root1 = constructBST(preorder1,&preorderIdx,preorder1[0],INT_MIN,INT_MAX,n);
+    // preorder(root1);
+    // cout<<endl;
+    int n;
+    cin>>n;
+    vector<int> vp;
+    for(int i=0;i<n;i++)
+    {
+        int x;
+        cin>>x;
+        vp.push_back(x);
+    }
+    sort(vp.begin(),vp.end());
+    Node* root = sortedArrayToBst(vp,0,n-1);
     preorder(root);
     cout<<endl;
-    int preorder1[] = {5,1,3,2,4,7};
-    int n=6;
-    int preorderIdx = 0;
-    Node* root1 = constructBST(preorder1,&preorderIdx,preorder1[0],INT_MIN,INT_MAX,n);
-    preorder(root1);
-    cout<<endl;
+    /*
+       30
+      /  \
+     10   40
+       \    \
+        20   50
+    */
+
 
 }
