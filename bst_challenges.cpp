@@ -188,6 +188,46 @@ vector<Node*> constructTrees(int start,int end)
     }
      return trees;
 }
+//Largest BST in BT
+struct Info{
+    int size;
+    int max;
+    int min;
+    int ans;
+    bool isBST;
+};
+
+Info largestBstInBt(Node* root)
+{
+    if(root==NULL)
+    {
+        return {0,INT_MIN,INT_MAX,0,true};
+    }
+    if(root->left==NULL&&root->right==NULL)
+    {
+        return {1,root->data,root->data,1,true};
+    }
+    Info leftInfo = largestBstInBt(root->left);
+    Info rightInfo = largestBstInBt(root->right);
+
+    Info curr;
+
+    curr.size = (1+leftInfo.size+rightInfo.size);
+
+    if(leftInfo.isBST&&rightInfo.isBST&&leftInfo.max<root->data&&rightInfo.min>root->data)
+    {
+        curr.min = min(leftInfo.min,min(rightInfo.min,root->data));
+        curr.max = max(rightInfo.max,max(leftInfo.max,root->data));
+
+        curr.ans = curr.size;
+        curr.isBST = true;
+        return curr;
+    }
+
+    curr.ans = max(leftInfo.ans,rightInfo.ans);
+    curr.isBST = false;
+    return curr;
+}
 int32_t main()
 {
     
@@ -257,14 +297,29 @@ int32_t main()
     // cout<<endl;
     // return 0;
 
-    vector<Node*> totalTrees = constructTrees(1,3);
-    // constructtrees(1,3);
-    for(int i=0;i<totalTrees.size();i++)
-    {
-        cout<<i+1<<" : ";
-        preorder(totalTrees[i]);
-        cout<<endl;
-    }
+    // vector<Node*> totalTrees = constructTrees(1,3);
+    // // constructtrees(1,3);
+    // for(int i=0;i<totalTrees.size();i++)
+    // {
+    //     cout<<i+1<<" : ";
+    //     preorder(totalTrees[i]);
+    //     cout<<endl;
+    // }
+
+
+    Node* root = new Node(15);
+    root->left = new Node(20);
+    root->right = new Node(30);
+    root->left->left = new Node(5);
+    /*
+        15
+       /  \
+      20  30
+     /
+    5  
+    
+    */
+    cout<<"Largest BST in BT "<<largestBstInBt(root).ans<<endl;
     return 0;
 
 
