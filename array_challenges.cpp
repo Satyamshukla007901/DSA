@@ -92,6 +92,22 @@ vector<int> find(int arr[], int n , int x )
     return vp;
     // code here
 }
+//find the duplicate no. in the array without modifying it
+int findDuplicate(vector<int> &nums)
+{
+    int ans[100001]={0};
+    int res;
+    for(auto &value:nums)
+    {
+        ans[value]++;
+        if(ans[value]>1)
+        {
+            res = value;
+            break;
+        }
+    }
+    return res;
+}
 int main() {
     int N;
     cin>>N;
