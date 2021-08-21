@@ -246,6 +246,48 @@ void printL(struct Node *head)
     }
     cout << "NULL" << endl;
 }
+struct node{
+    int data;
+    struct node* next;
+    struct node* prev;
+    node(int val)
+    {
+        data = val;
+        next = NULL;
+        prev = NULL;
+    }
+};
+//rotate doubly linkedlist by P nodes
+struct node* update(struct node*start,int p)
+{
+    if(!start)
+        return NULL;
+
+
+    struct node* temp = start;
+    struct node* prev = start;
+    int count = 0;
+    while(count!=p)
+    {
+        if(count!=p-1)
+            prev=prev->next;
+        count++;
+        temp=temp->next;
+    }
+    struct node* end = start;
+    while(end->next)
+    {
+        end=end->next;
+    }
+    end->next = start;
+    start->prev = end;
+    temp->prev = NULL;
+    start = temp;
+    prev->next = NULL;
+
+    return start;
+    //Add your code here
+}
 int main()
 {
     // Node *head = NULL;
