@@ -108,29 +108,83 @@ int findDuplicate(vector<int> &nums)
     }
     return res;
 }
-int main() {
-    int N;
-    cin>>N;
-    int vp[N];
-    for(int i=0;i<N;i++)
+//Place Elements to maximise minimum distance
+bool isFeasible(int mid,int arr[],int n,int k)
+{
+    int pos = arr[0],elements = 1;
+
+    for(int i=1;i<n;i++)
     {
-        // int x;
-        // cin>>x;
-        // vp.push_back(x);
-        cin>>vp[i];
+        if(arr[i]-pos >= mid)
+        {
+            pos = arr[i];
+            elements++;
+            if(elements == k)
+            {
+                return true;
+            }
+        }
     }
-    // // vp = separateNegativeAndPositive(vp);
-    // for(auto &value:vp)
-    //     cout<<value<<" ";
-    // cout<<endl;
-    // vector<int> A = findf(vp,N,2);
-    // for(auto &value:A)
+    return false;
+}
+int largestMindistance(int arr[],int n,int k)
+{
+    sort(arr,arr+n);
+
+    int result = -1;
+    int left = 1,right = arr[n-1];
+
+    while(left<right)
+    {
+        int mid = (left+right)/2;
+
+        if(isFeasible(mid,arr,n,k))
+        {
+            result = max(result,mid);
+            left = mid+1;
+        }
+        else
+        {
+            right = mid;
+        }
+    }
+
+    return result;
+
+}
+int main()
+{
+    // int N;
+    // cin >> N;
+    // // int vp[N];
+    // vector<int> vp(N);
+    // for (int i = 0; i < N; i++)
     // {
-    //     cout<<value<<" ";
+    //     // int x;
+    //     // cin>>x;
+    //     // vp.push_back(x);
+    //     cin >> vp[i];
     // }
-    // cout<<endl;
-	// your code goes here
-	return 0;
+    // // // vp = separateNegativeAndPositive(vp);
+    // // for(auto &value:vp)
+    // //     cout<<value<<" ";
+    // // cout<<endl;
+    // // vector<int> A = findf(vp,N,2);
+    // // for(auto &value:A)
+    // // {
+    // //     cout<<value<<" ";
+    // // }
+    // // cout<<endl;
+    // // your code goes here
+    // cout<<findDuplicate(vp)<<endl;
+
+
+    int arr[] = {1,2,8,4,9};
+    int n = 5;
+    int k = 3;
+
+    cout<<largestMindistance(arr,n,k)<<endl;
+    return 0;
 }
 
 
