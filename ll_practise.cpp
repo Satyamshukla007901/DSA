@@ -1522,6 +1522,63 @@ Node *addPolynomial(Node *p1, Node *p2)
     return dummy->next;
     //Your code here
 }
+void deleteNode(struct Node **head, int key)
+{
+    if((*head)==NULL)
+        return;
+    if((*head)->data==key){
+        (*head)=(*head)->next;
+        return;
+    }
+    Node* temp = *head;
+    
+    while(temp->next->data!=key&&temp->next!=*head)
+    {
+        temp=temp->next;
+    }
+    temp->next=temp->next->next;
+
+// Your code goes here
+
+}
+
+//Question to delete a node in circular list and to reverse the list
+/* Function to reverse the linked list */
+struct Node *reverseList(struct Node *head)
+{
+    struct Node *prev = NULL;
+    struct Node *curr = head;
+    while (curr)
+    {
+        struct Node *nxt = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = nxt;
+    }
+    return prev;
+    // code here
+    // return head of reversed list
+}
+ void reverse(struct Node** head_ref)
+{
+    
+    Node* temp = *head_ref;
+    if(temp->next==*head_ref)
+        return;
+    
+    while(temp->next!=*head_ref)
+    {
+        temp=temp->next;
+    }
+    temp->next=NULL;
+    *head_ref=reverseList(*head_ref);
+    temp=*head_ref;
+    while(temp->next!=NULL)
+        temp=temp->next;
+    temp->next=*head_ref;
+// Your code goes here
+
+}
 int main()
 {
     int n;
