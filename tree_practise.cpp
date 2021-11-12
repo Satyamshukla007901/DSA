@@ -1,45 +1,45 @@
 #include <bits/stdc++.h>
 using namespace std;
-struct Node{
+struct Node
+{
     int data;
-    struct Node* left;
-    struct Node* right;
+    struct Node *left;
+    struct Node *right;
     Node(int x)
     {
-       data = x;
-       left = NULL;
-       right = NULL; 
+        data = x;
+        left = NULL;
+        right = NULL;
     }
-    
 };
-void preorder(struct Node* root)
+void preorder(struct Node *root)
 {
-    if(!root)
+    if (!root)
         return;
-    cout<<root->data<<" ";
+    cout << root->data << " ";
     preorder(root->left);
     preorder(root->right);
 }
-void inorder(struct Node* root)
+void inorder(struct Node *root)
 {
-    if(!root)
+    if (!root)
         return;
-    
+
     inorder(root->left);
-    cout<<root->data<<" ";
+    cout << root->data << " ";
     inorder(root->right);
 }
-void postorder(struct Node* root)
+void postorder(struct Node *root)
 {
-    if(!root)
+    if (!root)
         return;
     postorder(root->left);
     postorder(root->right);
-    cout<<root->data<<" ";
+    cout << root->data << " ";
 }
 void levelOrder(Node *root)
 {
-    if (root==NULL)
+    if (root == NULL)
         return;
 
     queue<Node *> q;
@@ -50,7 +50,7 @@ void levelOrder(Node *root)
     {
         Node *node = q.front();
         q.pop();
-        if (node!=NULL)
+        if (node != NULL)
         {
             cout << node->data << " ";
             if (node->left)
@@ -61,6 +61,38 @@ void levelOrder(Node *root)
         else if (!q.empty())
             q.push(NULL);
     }
+}
+vector<vector<int>> levelOrder(TreeNode *root)
+{
+    vector<vector<int>> vp;
+    if (root == NULL)
+        return vp;
+
+    queue<TreeNode *> q;
+    q.push(root);
+    while (!q.empty())
+    {
+        vector<int> t;
+        int sz = q.size();
+        for (int i = 0; i < sz; i++)
+        {
+            TreeNode *temp = q.front();
+            // cout<<temp->val<<" ";
+            q.pop();
+            if (temp->left != NULL)
+            {
+                q.push(temp->left);
+            }
+            if (temp->right != NULL)
+            {
+                q.push(temp->right);
+            }
+            t.push_back(temp->val);
+        }
+        cout << endl;
+        vp.push_back(t);
+    }
+    return vp;
 }
 int32_t main()
 {
