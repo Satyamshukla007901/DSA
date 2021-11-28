@@ -147,6 +147,33 @@ vector<int> inorderTraversal(TreeNode *root)
     }
     return vp;
 }
+//Postorder iterative Approach using 2 stacks
+vector<int> postorderTraversal(TreeNode *root)
+{
+    vector<int> vp;
+    if (root == NULL)
+        return vp;
+
+    stack<TreeNode *> sp;
+    sp.push(root);
+    stack<TreeNode *> ans;
+    while (!sp.empty())
+    {
+        TreeNode *item = sp.top();
+        sp.pop();
+        ans.push(item);
+        if (item->left)
+            sp.push(item->left);
+        if (item->right)
+            sp.push(item->right);
+    }
+    while (!ans.empty())
+    {
+        vp.push_back(ans.top()->val);
+        ans.pop();
+    }
+    return vp;
+}
 int32_t main()
 {
     struct Node *root = new Node(1);
