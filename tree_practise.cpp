@@ -94,6 +94,59 @@ vector<vector<int>> levelOrder(TreeNode *root)
     }
     return vp;
 }
+//Preoorder iterative
+vector<int> preorderTraversal(TreeNode *root)
+{
+    vector<int> vp;
+    if (!root)
+        return vp;
+
+    stack<TreeNode *> st;
+    st.push(root);
+    while (!st.empty())
+    {
+        TreeNode *temp = st.top();
+        st.pop();
+
+        if (temp->right)
+            st.push(temp->right);
+        if (temp->left)
+            st.push(temp->left);
+        vp.push_back(temp->val);
+    }
+    return vp;
+}
+//Inorder Iterative
+vector<int> inorderTraversal(TreeNode *root)
+{
+    vector<int> vp;
+    if (root == NULL)
+        return vp;
+
+    stack<TreeNode *> st;
+    TreeNode *temp = root;
+
+    while (1)
+    {
+
+        if (temp != NULL)
+        {
+            st.push(temp);
+            temp = temp->left;
+        }
+        else
+        {
+            vp.push_back(st.top()->val);
+            temp = st.top();
+            st.pop();
+
+            temp = temp->right;
+        }
+        if (st.empty() == true && temp == NULL)
+            break;
+    }
+    return vp;
+}
 int32_t main()
 {
     struct Node *root = new Node(1);
