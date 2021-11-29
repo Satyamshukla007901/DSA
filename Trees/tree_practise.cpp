@@ -174,6 +174,117 @@ vector<int> postorderTraversal(TreeNode *root)
     }
     return vp;
 }
+//Tree HEight
+int maxDepth(TreeNode *root)
+{
+    int count = 0;
+    if (root == NULL)
+        return count;
+
+    count += 1 + max(maxDepth(root->left), maxDepth(root->right));
+    return count;
+}
+//Tree is Balanced or not check
+//O(N) TC
+//SC - O(N)
+int height(TreeNode *root)
+{
+    if (root == NULL)
+        return 0;
+    int lh = height(root->left);
+    int rh = height(root->right);
+    if (lh == -1 || rh == -1)
+        return -1;
+    if (abs(lh - rh) > 1)
+        return -1;
+    return 1 + max(lh, rh);
+}
+bool isBalanced(TreeNode *root)
+{
+
+    if (root == NULL)
+        return true;
+
+    if (height(root) == -1)
+        return false;
+    return true;
+}
+//TC - O(N^2)
+int height(TreeNode *root)
+{
+    if (root == NULL)
+        return 0;
+
+    return 1 + max(height(root->left), height(root->right));
+}
+bool isBalanced(TreeNode *root)
+{
+
+    if (root == NULL)
+        return true;
+
+    int lheight = height(root->left);
+    int rheight = height(root->right);
+
+    if (abs(lheight - rheight) <= 1)
+        return isBalanced(root->left) && isBalanced(root->right);
+    else
+        return false;
+}
+//Diameteer of Binary Tree
+//Brute FOrce
+//TC-> O(N^2)
+int path(TreeNode *root)
+{
+    if (root == NULL)
+        return 0;
+
+    return 1 + max(path(root->left), path(root->right));
+}
+int diameterOfBinaryTree(TreeNode *root)
+{
+    if (root == NULL)
+        return 0;
+
+    int sum = path(root->left) + path(root->right);
+    return max(sum, max(diameterOfBinaryTree(root->left), diameterOfBinaryTree(root->right)));
+}
+//O(N) approach
+int path(TreeNode *root, int &x)
+{
+    if (root == NULL)
+        return 0;
+
+    int lh = path(root->left, x);
+    int rh = path(root->right, x);
+    x = max(x, lh + rh);
+    return 1 + max(lh, rh);
+}
+int diameterOfBinaryTree(TreeNode *root)
+{
+    if (root == NULL)
+        return 0;
+    int x = 0;
+    path(root, x);
+    return x;
+}
+//is Symmetric
+bool same(TreeNode *p, TreeNode *q)
+{
+    if (p == NULL && q == NULL)
+        return true;
+    if (!p || !q)
+        return false;
+
+    return (p->val == q->val) && same(p->left, q->right) && same(p->right, q->left);
+}
+bool isSymmetric(TreeNode *root)
+{
+    if (root == NULL)
+        return true;
+
+    return same(root->left, root->right);
+}
 int32_t main()
 {
     struct Node *root = new Node(1);
