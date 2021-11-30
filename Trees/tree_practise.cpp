@@ -285,6 +285,63 @@ bool isSymmetric(TreeNode *root)
 
     return same(root->left, root->right);
 }
+//Convert Sorted Array to BST
+TreeNode *utility(vector<int> &vp, int i, int f)
+{
+    if (i > f)
+        return NULL;
+    int mid = (i + f) / 2;
+    TreeNode *root = new TreeNode(vp[mid]);
+    root->left = utility(vp, i, mid - 1);
+    root->right = utility(vp, mid + 1, f);
+    return root;
+}
+TreeNode *sortedArrayToBST(vector<int> &nums)
+{
+
+    int size = nums.size();
+    if (size == 0)
+        return NULL;
+
+    return utility(nums, 0, size - 1);
+}
+//Minimum Depth of Binray Tree
+int minDepth(TreeNode *root)
+{
+    if (root == NULL)
+        return 0;
+    if (root->left == NULL && root->right != NULL)
+        return 1 + minDepth(root->right);
+    if (root->right == NULL && root->left != NULL)
+        return 1 + minDepth(root->left);
+    return 1 + min(minDepth(root->left), minDepth(root->right));
+}
+//Invert Tree
+TreeNode *invertTree(TreeNode *root)
+{
+    if (root == NULL)
+        return NULL;
+
+    TreeNode *temp = root->left;
+    root->left = root->right;
+    root->right = temp;
+    invertTree(root->left);
+    invertTree(root->right);
+    return root;
+}
+//Path Sum
+bool hasPathSum(TreeNode *root, int targetSum)
+{
+    if (root == NULL && targetSum == 0)
+        return false;
+    if (root == NULL)
+        return false;
+    bool l = hasPathSum(root->left, targetSum - (root->val));
+    bool r = hasPathSum(root->right, targetSum - (root->val));
+    if (targetSum - (root->val) == 0 && root->left == NULL && root->right == NULL)
+        return true;
+    return l || r;
+}
 int32_t main()
 {
     struct Node *root = new Node(1);
