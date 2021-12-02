@@ -342,6 +342,24 @@ bool hasPathSum(TreeNode *root, int targetSum)
         return true;
     return l || r;
 }
+//LCA in BST
+TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *p, TreeNode *q)
+{
+    if (root == NULL)
+        return NULL;
+
+    if ((p->val < root->val && q->val > root->val) || (p->val > root->val && q->val < root->val))
+    {
+        return root;
+    }
+    else if (p->val == root->val || q->val == root->val)
+    {
+        return root;
+    }
+    else if (p->val < root->val && q->val < root->val)
+        return lowestCommonAncestor(root->left, p, q);
+    return lowestCommonAncestor(root->right, p, q);
+}
 int32_t main()
 {
     struct Node *root = new Node(1);
