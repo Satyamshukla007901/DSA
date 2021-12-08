@@ -360,6 +360,124 @@ TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *p, TreeNode *q)
         return lowestCommonAncestor(root->left, p, q);
     return lowestCommonAncestor(root->right, p, q);
 }
+//Binary Tree paths
+void utility(TreeNode *root, vector<string> &vp, string str)
+{
+    if (root == NULL)
+        return;
+
+    if (root->left == NULL && root->right == NULL)
+    {
+        str += to_string(root->val);
+        vp.push_back(str);
+    }
+    else
+        str += to_string(root->val) + "->";
+
+    utility(root->left, vp, str);
+    utility(root->right, vp, str);
+}
+vector<string> binaryTreePaths(TreeNode *root)
+{
+    vector<string> vp;
+    if (root == NULL)
+        return vp;
+    string str = "";
+    utility(root, vp, str);
+    return vp;
+}
+//Sum of Left Leaves
+int utility(TreeNode *root)
+{
+    if (root == NULL)
+        return 0;
+    if (root->left == NULL && root->right == NULL)
+        return root->val;
+    int lc = utility(root->left);
+
+    int rc = utility(root->right);
+    if (root->right && root->right->left == NULL && root->right->right == NULL)
+        return lc;
+    return lc + rc;
+}
+int sumOfLeftLeaves(TreeNode *root)
+{
+
+    if (root == NULL || (root->left == NULL && root->right == NULL))
+        return 0;
+    return utility(root);
+}
+//Finding Mode of a BST
+void utility(TreeNode *root, map<int, int> &ump)
+{
+    if (root == NULL)
+        return;
+    ump[root->val]++;
+    utility(root->left, ump);
+    utility(root->right, ump);
+    return;
+}
+vector<int> findMode(TreeNode *root)
+{
+    vector<int> vp;
+    if (root == NULL)
+        return vp;
+
+    map<int, int> mp;
+    utility(root, mp);
+    multimap<int, int, greater<int>> ump;
+    for (auto &value : mp)
+    {
+        ump.insert({value.second, value.first});
+    }
+    int max = ((*(ump.begin())).first);
+    for (auto &value : ump)
+    {
+        if (value.first == max)
+            vp.push_back(value.second);
+        else
+            break;
+    }
+    return vp;
+}
+//Minimum absolute difference in BST
+vector<int> vp;
+vector<int> inOrder(TreeNode *root)
+{
+    if (root == NULL)
+        return vp;
+
+    vp = inOrder(root->left);
+    vp.push_back(root->val);
+    vp = inOrder(root->right);
+    return vp;
+    // Your code here
+}
+int getMinimumDifference(TreeNode *root)
+{
+    int mine = INT_MAX;
+    vector<int> ok = inOrder(root);
+    for (int i = 0; i < ok.size() - 1; i++)
+    {
+        mine = min(mine, abs(ok[i] - ok[i + 1]));
+    }
+    return mine;
+}
+//Better Approach
+int mine = INT_MAX;
+int val = -1;
+int getMinimumDifference(TreeNode *root)
+{
+
+    if (root->left)
+        getMinimumDifference(root->left);
+    if (val >= 0)
+        mine = min(mine, abs(root->val - val));
+    val = root->val;
+    if (root->right)
+        getMinimumDifference(root->right);
+    return mine;
+}
 int32_t main()
 {
     struct Node *root = new Node(1);
