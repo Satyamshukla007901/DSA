@@ -478,6 +478,55 @@ int getMinimumDifference(TreeNode *root)
         getMinimumDifference(root->right);
     return mine;
 }
+//Binary Tree Tilt
+int utility(TreeNode *root, int &ans)
+{
+    if (root == NULL)
+        return 0;
+    if (root->left == NULL && root->right == NULL)
+        return root->val;
+    int sumL = 0;
+    if (root->left)
+        sumL += utility(root->left, ans);
+    int sumR = 0;
+    if (root->right)
+        sumR += utility(root->right, ans);
+    ans += abs(sumL - sumR);
+    return sumL + sumR + root->val;
+}
+int findTilt(TreeNode *root)
+{
+    if (root == NULL)
+        return 0;
+    int ans = 0;
+    utility(root, ans);
+    return ans;
+}
+//Max Path Sum
+int utility(TreeNode *root, int &maxi)
+{
+    if (root == NULL)
+        return 0;
+
+    int Lsum = utility(root->left, maxi);
+    int Rsum = utility(root->right, maxi);
+    if (Lsum < 0)
+        Lsum = 0;
+    if (Rsum < 0)
+        Rsum = 0;
+    maxi = max(maxi, root->val + Lsum + Rsum);
+
+    return root->val + max(Lsum, Rsum);
+}
+int maxPathSum(TreeNode *root)
+{
+    if (root == NULL)
+        return 0;
+
+    int maxi = INT_MIN;
+    utility(root, maxi);
+    return maxi;
+}
 int32_t main()
 {
     struct Node *root = new Node(1);
