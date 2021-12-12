@@ -527,6 +527,60 @@ int maxPathSum(TreeNode *root)
     utility(root, maxi);
     return maxi;
 }
+//Tree to String
+string tree2str(TreeNode *root)
+{
+    string str = "";
+    if (root == NULL)
+        return str;
+    str += to_string(root->val);
+
+    if (root->left)
+    {
+        str += "(";
+        str += tree2str(root->left);
+        str += ")";
+    }
+    if ((root->left == NULL && root->right != NULL))
+        str += "()";
+    if (root->right)
+    {
+        str += "(";
+        str += tree2str(root->right);
+        str += ")";
+    }
+
+    return str;
+}
+//Merge trees
+TreeNode *mergeTrees(TreeNode *root1, TreeNode *root2)
+{
+    if (root1 == NULL || root2 == NULL)
+    {
+        if (root1 == NULL)
+            return root2;
+        return root1;
+    }
+    if (root1->left == NULL && root2->left != NULL)
+    {
+        TreeNode *node = new TreeNode(root2->left->val);
+        root2->left->val = 0;
+        root1->left = node;
+    }
+
+    if (root1->right == NULL && root2->right != NULL)
+    {
+        TreeNode *node = new TreeNode(root2->right->val);
+        root2->right->val = 0;
+        root1->right = node;
+    }
+
+    root1->val += root2->val;
+
+    mergeTrees(root1->left, root2->left);
+    mergeTrees(root1->right, root2->right);
+    return root1;
+}
 int32_t main()
 {
     struct Node *root = new Node(1);
