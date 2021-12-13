@@ -581,6 +581,110 @@ TreeNode *mergeTrees(TreeNode *root1, TreeNode *root2)
     mergeTrees(root1->right, root2->right);
     return root1;
 }
+//Average Value of Every Level
+vector<double> averageOfLevels(TreeNode *root)
+{
+    vector<double> vp;
+    if (root == NULL)
+        return vp;
+
+    queue<TreeNode *> q;
+    q.push(root);
+    while (!q.empty())
+    {
+        double mean = 0.0;
+        long long sum = 0;
+        int sz = q.size();
+        for (int i = 0; i < sz; i++)
+        {
+            TreeNode *temp = q.front();
+            q.pop();
+            if (temp->left)
+                q.push(temp->left);
+            if (temp->right)
+                q.push(temp->right);
+            sum += temp->val;
+        }
+        vp.push_back(sum / (double)sz);
+    }
+    return vp;
+}
+//Two Sum in BST (NAIVE approach)
+bool twoSum(vector<int> &nums, int target)
+{
+    unordered_map<int, int> mp;
+    vector<int> vp;
+    for (int i = 0; i < nums.size(); i++)
+    {
+        int r = target - nums[i];
+        if (mp.find(r) == mp.end())
+        {
+            mp[nums[i]] = i;
+        }
+        else
+        {
+            vp.push_back(mp[r]);
+            vp.push_back(i);
+            return true;
+        }
+    }
+    return false;
+}
+vector<int> inorder(TreeNode *root)
+{
+    vector<int> vp;
+    if (root == NULL)
+        return vp;
+
+    vector<int> t1 = inorder(root->left);
+    for (auto &value : t1)
+        vp.push_back(value);
+    vp.push_back(root->val);
+    vector<int> t2 = inorder(root->right);
+    for (auto &value : t2)
+        vp.push_back(value);
+    return vp;
+}
+bool findTarget(TreeNode *root, int k)
+{
+    if (root == NULL)
+        return false;
+    vector<int> vp = inorder(root);
+    // for(auto &value:vp)
+    //         cout<<value<<" ";
+    // cout<<endl;
+    return twoSum(vp, k);
+}
+//Anothert Approach
+void inorder(TreeNode *root, vector<int> &vp)
+{
+
+    if (root == NULL)
+        return;
+
+    inorder(root->left, vp);
+    vp.push_back(root->val);
+    inorder(root->right, vp);
+}
+bool findTarget(TreeNode *root, int k)
+{
+    if (root == NULL)
+        return false;
+    vector<int> vp;
+    inorder(root, vp);
+    int start = 0;
+    int end = vp.size() - 1;
+    while (start < end)
+    {
+        if (vp[start] + vp[end] == k)
+            return true;
+        else if (vp[start] + vp[end] > k)
+            end--;
+        else
+            start++;
+    }
+    return false;
+}
 int32_t main()
 {
     struct Node *root = new Node(1);
