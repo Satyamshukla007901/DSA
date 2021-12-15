@@ -1,7 +1,6 @@
 //KnapSack 0/1
-https : //practice.geeksforgeeks.org/problems/0-1-knapsack-problem0945/1#
-        int
-        knapSack(int W, int wt[], int val[], int n)
+//https : //practice.geeksforgeeks.org/problems/0-1-knapsack-problem0945/1#
+int knapSack(int W, int wt[], int val[], int n)
 {
     int dp[n + 1][W + 1];
     for (int i = 0; i <= n; i++)
