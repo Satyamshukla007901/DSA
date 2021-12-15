@@ -28,3 +28,34 @@ https : //practice.geeksforgeeks.org/problems/0-1-knapsack-problem0945/1#
     return dp[n][W];
     // Your code here
 }
+//Subset Sum Probelm
+//https://practice.geeksforgeeks.org/problems/subset-sum-problem-1611555638/1/?category[]=Dynamic%20Programming&category[]=Dynamic%20Programming&page=4&query=category[]Dynamic%20Programmingpage4category[]Dynamic%20Programming
+bool isSubsetSum(int N, int arr[], int sum)
+{
+    bool dp[N + 1][sum + 1];
+
+    for (int i = 0; i <= N; i++)
+    {
+        for (int j = 0; j <= sum; j++)
+        {
+            if (i == 0)
+                dp[i][j] = false;
+            if (j == 0)
+                dp[i][j] = true;
+        }
+    }
+    // code here
+    for (int i = 1; i <= N; i++)
+    {
+        for (int j = 1; j <= sum; j++)
+        {
+            if (arr[i - 1] > j)
+                dp[i][j] = dp[i - 1][j];
+            else
+            {
+                dp[i][j] = dp[i - 1][j] or dp[i - 1][j - arr[i - 1]];
+            }
+        }
+    }
+    return dp[N][sum];
+}
