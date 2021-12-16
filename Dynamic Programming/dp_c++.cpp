@@ -117,3 +117,53 @@ int perfectSum(int arr[], int n, int sum)
 
     // Your code goes here
 }
+//Minimum Sum Difference Partition
+//https://practice.geeksforgeeks.org/problems/minimum-sum-partition3317/1#
+bool dp[1005][1005];
+bool subsetSum(int arr[], int n, int sum)
+{
+
+    for (int i = 0; i <= n; i++)
+        dp[i][0] = 1;
+    for (int j = 1; j <= sum; j++)
+        dp[0][j] = 0;
+
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = 1; j <= sum; j++)
+        {
+            if (arr[i - 1] > j)
+                dp[i][j] = dp[i - 1][j];
+            else
+                dp[i][j] = dp[i - 1][j] or dp[i - 1][j - arr[i - 1]];
+        }
+    }
+    return dp[n][sum];
+}
+int minDifference(int arr[], int n)
+{
+    int sum = 0;
+    for (int i = 0; i < n; i++)
+        sum += arr[i];
+
+    vector<int> vp;
+    subsetSum(arr, n, sum);
+    subsetSum(arr, n, 0);
+    for (int i = 0; i <= sum; i++)
+    {
+        if (dp[n][i])
+        {
+            vp.push_back(i);
+        }
+    }
+    int absmin = INT_MAX;
+    int mid = -1;
+    if (vp.size() % 2 == 0)
+        mid = vp.size() - 1;
+    else
+        mid = vp.size();
+    for (int i = 0; i <= mid; i++)
+        absmin = min(absmin, abs(2 * vp[i] - sum));
+    return absmin;
+    // Your code goes here
+}
