@@ -174,7 +174,37 @@ int countSubset(int arr[], int n, int diff)
     for (int i = 0; i < n; i++)
         sum += arr[i];
     int ans = 0;
+    subsetSum(arr, n, sum);
+    subsetSum(arr, n, 0);
+    vector<int> vp;
+    for (int i = 0; i <= sum; i++)
+    {
+        if (dp[n][i])
+        {
+            vp.push_back(i);
+        }
+    }
+    int mid = -1;
+    if (vp.size() % 2 == 0)
+        mid = vp.size() - 1;
+    else
+        mid = vp.size();
+    for (int i = 0; i <= mid; i++)
+    {
+        if (abs(2 * vp[i] - sum) == diff)
+        {
+            ans++;
+        }
+    }
+    return ans;
+}
+//another approach
+int countSubset(int arr[], int n, int diff)
+{
+    int sum = 0;
+    for (int i = 0; i < n; i++)
+        sum += arr[i];
+    int ans = 0;
     ans = countSubset(arr,n,(sum+diff)/2);
     cout<<countSubset<<endl;
 }
-//another approach
