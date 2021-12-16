@@ -205,6 +205,38 @@ int countSubset(int arr[], int n, int diff)
     for (int i = 0; i < n; i++)
         sum += arr[i];
     int ans = 0;
-    ans = countSubset(arr,n,(sum+diff)/2);
-    cout<<countSubset<<endl;
+    ans = countSubset(arr, n, (sum + diff) / 2);
+    cout << countSubset << endl;
+}
+//Target Sum
+//https://leetcode.com/problems/target-sum/
+int countSubset(vector<int> &vp, int sum)
+{
+    int n = vp.size();
+    int dp[n + 1][sum + 1];
+    for (int i = 0; i <= n; i++)
+        dp[i][0] = 1;
+    for (int j = 1; j <= sum; j++)
+        dp[0][j] = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = 0; j <= sum; j++)
+        {
+            if (vp[i - 1] > j)
+                dp[i][j] = dp[i - 1][j];
+            else
+                dp[i][j] = dp[i - 1][j] + dp[i - 1][j - vp[i - 1]];
+        }
+    }
+    return dp[n][sum];
+}
+int findTargetSumWays(vector<int> &nums, int target)
+{
+    int s = accumulate(nums.begin(), nums.end(), 0) + target;
+    if (accumulate(nums.begin(), nums.end(), 0) < target || s % 2 == 1)
+        return 0;
+
+    int sum = (s) / 2;
+    sum = abs(sum);
+    return countSubset(nums, sum);
 }
