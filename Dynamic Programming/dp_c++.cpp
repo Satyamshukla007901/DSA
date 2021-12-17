@@ -269,3 +269,4 @@ int knapSack(int N, int W, int val[], int wt[])
     return dp[N][W];
     // code here
 }
+/
