@@ -304,7 +304,7 @@ int cutRod(int price[], int n)
     return dp[n][n];
     //code here
 }
-//Coin Problem
+//Coin Problem Max Number of Ways
 //https://practice.geeksforgeeks.org/problems/coin-change2448/1#
 long long int count(int S[], int m, int n)
 {
