@@ -1,3 +1,4 @@
+#include <bits/stdc++.h>
 //KnapSack 0/1
 //https : //practice.geeksforgeeks.org/problems/0-1-knapsack-problem0945/1#
 int knapSack(int W, int wt[], int val[], int n)
