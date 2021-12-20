@@ -498,6 +498,8 @@ int shortestCommonSupersequence(string X, string Y, int m, int n)
 //https://practice.geeksforgeeks.org/problems/minimum-number-of-deletions-and-insertions0209/1
 int minOperations(string str1, string str2)
 {
+    //No. of Insertions : a.length()-lcs
+    //No. of Deletions : b.length()-lcs;
     int n = str1.length();
     int m = str2.length();
     int ok = lcs(n, m, str1, str2);
