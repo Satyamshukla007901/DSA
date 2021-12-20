@@ -491,6 +491,16 @@ string printLcs(string s1, string s2, int n, int m)
 int shortestCommonSupersequence(string X, string Y, int m, int n)
 {
     //simply add the LCS and the remainign from the strings ==> ans = LCS+(m-LCS)+(n-LCS);
-    return m+n-lcs(m,n,X,Y);
+    return m + n - lcs(m, n, X, Y);
     //code here
+}
+//Minimum Number of Insertion Deletion
+//https://practice.geeksforgeeks.org/problems/minimum-number-of-deletions-and-insertions0209/1
+int minOperations(string str1, string str2)
+{
+    int n = str1.length();
+    int m = str2.length();
+    int ok = lcs(n, m, str1, str2);
+    return n - ok + m - ok;
+    // Your code goes here
 }
