@@ -490,7 +490,7 @@ string printLcs(string s1, string s2, int n, int m)
 //https://practice.geeksforgeeks.org/problems/shortest-common-supersequence0322/1
 int shortestCommonSupersequence(string X, string Y, int m, int n)
 {
-
+    //simply add the LCS and the remainign from the strings ==> ans = LCS+(m-LCS)+(n-LCS);
     long long sz = 0;
     int x;
     string ans = printLcs(X, Y, m, n, x);
