@@ -491,17 +491,6 @@ string printLcs(string s1, string s2, int n, int m)
 int shortestCommonSupersequence(string X, string Y, int m, int n)
 {
     //simply add the LCS and the remainign from the strings ==> ans = LCS+(m-LCS)+(n-LCS);
-    long long sz = 0;
-    int x;
-    string ans = printLcs(X, Y, m, n, x);
-    sz = x;
-    auto it = X.find(ans);
-    sz += it;
-    sz += (X.length() - (it + x));
-    it = Y.find(ans);
-    sz += it;
-    sz += (Y.length() - (it + x));
-    return sz;
-
+    return m+n-lcs(m,n,X,Y);
     //code here
 }
