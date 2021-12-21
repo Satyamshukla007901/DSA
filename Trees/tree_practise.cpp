@@ -685,6 +685,40 @@ bool findTarget(TreeNode *root, int k)
     }
     return false;
 }
+//Odd Even Level Difference
+int getLevelDiff(Node *root)
+{
+    queue<Node *> q;
+    int esum = 0;
+    int osum = 0;
+    q.push(root);
+    int idx = 1;
+    while (!q.empty())
+    {
+        int ok = q.size();
+        for (int i = 1; i <= ok; i++)
+        {
+            Node *temp = q.front();
+            q.pop();
+            if (idx % 2 == 1)
+            {
+                osum += temp->data;
+            }
+            else if (idx % 2 == 0)
+            {
+                esum += temp->data;
+            }
+            if (temp->left)
+                q.push(temp->left);
+            if (temp->right)
+                q.push(temp->right);
+        }
+        idx++;
+    }
+    // cout<<osum<<" "<<esum<<endl;
+    return osum - esum;
+    //Your code here
+}
 int32_t main()
 {
     struct Node *root = new Node(1);
