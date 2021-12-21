@@ -506,3 +506,11 @@ int minOperations(string str1, string str2)
     return n - ok + m - ok;
     // Your code goes here
 }
+//Longest Palindromic Subsequence
+//https://leetcode.com/problems/longest-palindromic-subsequence/
+int longestPalindromeSubseq(string s)
+{
+    string str = s;
+    reverse(s.begin(), s.end());
+    return lcs(str.length(), s.length(), str, s);
+}
