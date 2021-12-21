@@ -514,3 +514,10 @@ int longestPalindromeSubseq(string s)
     reverse(s.begin(), s.end());
     return lcs(str.length(), s.length(), str, s);
 }
+//Minimum Number os Deletions to make String palindrome
+//https://practice.geeksforgeeks.org/problems/minimum-deletitions1648/1
+int minimumNumberOfDeletions(string S)
+{
+    return S.length() - longestPalindromeSubseq(S);
+    // code here
+}
