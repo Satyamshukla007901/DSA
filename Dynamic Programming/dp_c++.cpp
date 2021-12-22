@@ -660,3 +660,11 @@ bool isSubsequence(string A, string B)
     return 0;
     // code here
 }
+//Minimum Number of Insertion to make string palindrome
+int countMin(string str)
+{
+    string t = str;
+    reverse(t.begin(), t.end());
+    return str.length() - lcs(str.length(), str.length(), str, t);
+    //complete the function here
+}
