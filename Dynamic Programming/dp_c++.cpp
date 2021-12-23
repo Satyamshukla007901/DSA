@@ -668,3 +668,25 @@ int countMin(string str)
     return str.length() - lcs(str.length(), str.length(), str, t);
     //complete the function here
 }
+//Matrix Chain Multiplication Recursive Approach
+//https://practice.geeksforgeeks.org/problems/matrix-chain-multiplication0303/1#
+int solve(int arr[], int i, int j)
+{
+    if (i >= j)
+        return 0;
+    int ans = INT_MAX;
+    for (int k = i; k <= j - 1; k++)
+    {
+        int tempans = solve(arr, i, k) + solve(arr, k + 1, j) + (arr[i - 1] * arr[k] * arr[j]);
+        if (tempans < ans)
+            ans = tempans;
+    }
+    return ans;
+}
+int matrixMultiplication(int N, int arr[])
+{
+    int i = 1;
+    int j = N - 1;
+    return solve(arr, i, j);
+    // code here
+}
