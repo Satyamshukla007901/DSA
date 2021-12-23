@@ -758,4 +758,60 @@ int palindromicPartition(string str)
     return solve(str, 0, str.length() - 1);
     // code here
 }
-//optimised
+//optimised appoach
+bool isPalindrome(string str, int i, int j)
+{
+    if (i == j)
+        return true;
+    if (i > j)
+        return true;
+    while (i <= j)
+    {
+        if (str[i] != str[j])
+            return false;
+        i++;
+        j--;
+    }
+    return true;
+}
+int dp[501][501];
+int solve(string &str, int i, int j)
+{
+    if (i >= j)
+        return 0;
+    if (dp[i][j] != -1)
+        return dp[i][j];
+    if (isPalindrome(str, i, j))
+        return 0;
+
+    int ans = INT_MAX;
+    for (int k = i; k < j; k++)
+    {
+        int a, b;
+        if (dp[i][k] != -1)
+        {
+            a = dp[i][k];
+        }
+        else if (dp[i][k] == -1)
+        {
+            a = solve(str, i, k);
+        }
+        if (dp[k + 1][j] != -1)
+        {
+            b = dp[k + 1][j];
+        }
+        else if (dp[k + 1][j] == -1)
+        {
+            b = solve(str, k + 1, j);
+        }
+        int tempans = a + b + 1;
+        ans = min(tempans, ans);
+    }
+    return dp[i][j] = ans;
+}
+int palindromicPartition(string str)
+{
+    memset(dp, -1, sizeof(dp));
+    return solve(str, 0, str.length() - 1);
+    // code here
+}
