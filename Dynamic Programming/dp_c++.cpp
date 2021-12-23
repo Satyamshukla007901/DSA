@@ -691,7 +691,7 @@ int matrixMultiplication(int N, int arr[])
     // code here
 }
 //Memoisation Bottom Up Approach
-int dp[1001][1001];// not declaring as static as in other langauges becoz in c++ static data memebers can be accesed only via static methods
+int dp[1001][1001]; // not declaring as static as in other langauges becoz in c++ static data memebers can be accesed only via static methods
 int solve(int arr[], int i, int j)
 {
     if (i >= j)
@@ -714,5 +714,45 @@ int matrixMultiplication(int N, int arr[])
     int j = N - 1;
 
     return solve(arr, i, j);
+    // code here
+}
+//Palondromic Partition
+bool isPalindrome(string str, int i, int j)
+{
+    if (i == j)
+        return true;
+    if (i > j)
+        return true;
+    while (i <= j)
+    {
+        if (str[i] != str[j])
+            return false;
+        i++;
+        j--;
+    }
+    return true;
+}
+int dp[501][501];
+int solve(string &str, int i, int j)
+{
+    if (i >= j)
+        return 0;
+    if (dp[i][j] != -1)
+        return dp[i][j];
+    if (isPalindrome(str, i, j))
+        return 0;
+
+    int ans = INT_MAX;
+    for (int k = i; k < j; k++)
+    {
+        int tempans = solve(str, i, k) + solve(str, k + 1, j) + 1;
+        ans = min(tempans, ans);
+    }
+    return dp[i][j] = ans;
+}
+int palindromicPartition(string str)
+{
+    memset(dp, -1, sizeof(dp));
+    return solve(str, 0, str.length() - 1);
     // code here
 }
