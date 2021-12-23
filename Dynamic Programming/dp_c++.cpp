@@ -758,3 +758,4 @@ int palindromicPartition(string str)
     return solve(str, 0, str.length() - 1);
     // code here
 }
+//optimised
