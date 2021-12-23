@@ -691,7 +691,7 @@ int matrixMultiplication(int N, int arr[])
     // code here
 }
 //Memoisation Bottom Up Approach
-int dp[1001][1001];
+int dp[1001][1001];// not declaring as static as in other langauges becoz in c++ static data memebers can be accesed only via static methods
 int solve(int arr[], int i, int j)
 {
     if (i >= j)
