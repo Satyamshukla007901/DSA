@@ -717,6 +717,8 @@ int matrixMultiplication(int N, int arr[])
     // code here
 }
 //Palondromic Partition
+//https://practice.geeksforgeeks.org/problems/palindromic-patitioning4845/1#
+//Passing by reference the string reduces time complexity as we know that passing by copy of int or char does`nt take large amt of time but in case of string it takes.
 bool isPalindrome(string str, int i, int j)
 {
     if (i == j)
