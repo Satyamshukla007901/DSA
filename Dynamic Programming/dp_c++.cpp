@@ -815,3 +815,78 @@ int palindromicPartition(string str)
     return solve(str, 0, str.length() - 1);
     // code here
 }
+//Boolean parathesization
+unordered_map<string, int> mp;
+int solve(string S, int i, int j, bool x)
+{
+    if (i > j)
+        return 0;
+
+    if (i == j)
+    {
+        if (x == true)
+        {
+            return S[i] == 'T';
+        }
+        else
+            return S[i] == 'F';
+    }
+    string ok = "";
+    ok += to_string(i);
+    ok += " ";
+    ok += to_string(j);
+    ok += " ";
+    ok += to_string(x);
+    int ans = 0;
+    if (mp.find(ok) != mp.end())
+        return mp[ok];
+    for (int k = i + 1; k <= j - 1; k += 2)
+    {
+        int lT = solve(S, i, k - 1, true);
+        int lF = solve(S, i, k - 1, false);
+        int rT = solve(S, k + 1, j, true);
+        int rF = solve(S, k + 1, j, false);
+
+        if (S[k] == '&')
+        {
+            if (x)
+            {
+                ans += lT * rT;
+            }
+            else
+                ans += lF * rF + lT * rF + lF * rT;
+        }
+        else if (S[k] == '|')
+        {
+            if (x)
+            {
+                ans += lT * rF + lF * rT + lT * rT;
+            }
+            else
+            {
+                ans += rF * lF;
+            }
+        }
+        else
+        {
+            if (x)
+            {
+                ans += lT * rF + lF * rT;
+            }
+            else
+            {
+                ans += rT * lT + rF * lF;
+            }
+        }
+    }
+    return mp[ok] = ans % 1003;
+}
+int countWays(int N, string S)
+{
+    mp.clear();
+    int i = 0;
+    int j = N - 1;
+    bool isTrue = true;
+    return solve(S, i, j, isTrue) % 1003;
+    // code here
+}
