@@ -1524,22 +1524,22 @@ Node *addPolynomial(Node *p1, Node *p2)
 }
 void deleteNode(struct Node **head, int key)
 {
-    if((*head)==NULL)
+    if ((*head) == NULL)
         return;
-    if((*head)->data==key){
-        (*head)=(*head)->next;
-        return;
-    }
-    Node* temp = *head;
-    
-    while(temp->next->data!=key&&temp->next!=*head)
+    if ((*head)->data == key)
     {
-        temp=temp->next;
+        (*head) = (*head)->next;
+        return;
     }
-    temp->next=temp->next->next;
+    Node *temp = *head;
 
-// Your code goes here
+    while (temp->next->data != key && temp->next != *head)
+    {
+        temp = temp->next;
+    }
+    temp->next = temp->next->next;
 
+    // Your code goes here
 }
 
 //Question to delete a node in circular list and to reverse the list
@@ -1559,25 +1559,52 @@ struct Node *reverseList(struct Node *head)
     // code here
     // return head of reversed list
 }
- void reverse(struct Node** head_ref)
+void reverse(struct Node **head_ref)
 {
-    
-    Node* temp = *head_ref;
-    if(temp->next==*head_ref)
-        return;
-    
-    while(temp->next!=*head_ref)
-    {
-        temp=temp->next;
-    }
-    temp->next=NULL;
-    *head_ref=reverseList(*head_ref);
-    temp=*head_ref;
-    while(temp->next!=NULL)
-        temp=temp->next;
-    temp->next=*head_ref;
-// Your code goes here
 
+    Node *temp = *head_ref;
+    if (temp->next == *head_ref)
+        return;
+
+    while (temp->next != *head_ref)
+    {
+        temp = temp->next;
+    }
+    temp->next = NULL;
+    *head_ref = reverseList(*head_ref);
+    temp = *head_ref;
+    while (temp->next != NULL)
+        temp = temp->next;
+    temp->next = *head_ref;
+    // Your code goes here
+}
+//Merge In Between
+ListNode *mergeInBetween(ListNode *list1, int a, int b, ListNode *list2)
+{
+
+    ListNode *temp;
+    temp = list1;
+    int cnt = 1;
+    while (temp && temp->next)
+    {
+        ListNode *ok = temp->next;
+        if (cnt == a)
+        {
+
+            temp->next = list2;
+        }
+        else if (cnt == b + 1)
+        {
+            ListNode *temp2 = list2;
+            while (temp2 && temp2->next)
+                temp2 = temp2->next;
+            temp2->next = temp->next;
+            break;
+        }
+        cnt++;
+        temp = ok;
+    }
+    return list1;
 }
 int main()
 {
