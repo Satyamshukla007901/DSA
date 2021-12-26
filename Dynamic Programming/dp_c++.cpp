@@ -918,3 +918,31 @@ bool isScramble(string s1, string s2)
 {
     return ok(s1, s2);
 }
+//Egg Dropping Problem
+////https://practice.geeksforgeeks.org/problems/egg-dropping-puzzle-1587115620/1
+int dp[201][201];
+int solve(int N, int K)
+{
+    if (K == 0 || K == 1)
+        return K;
+    if (N == 1)
+        return K;
+    if (dp[N][K] != -1)
+        return dp[N][K];
+    int mn = INT_MAX;
+    for (int k = 1; k <= K - 1; k++)
+    {
+        int temp = 1 + max(solve(N - 1, k - 1), solve(N, K - k));
+        mn = min(mn, temp);
+    }
+    return dp[N][K] = mn;
+}
+//Function to find minimum number of attempts needed in
+//order to find the critical floor.
+//https://practice.geeksforgeeks.org/problems/egg-dropping-puzzle-1587115620/1
+int eggDrop(int n, int k)
+{
+    memset(dp, -1, sizeof(dp));
+    return solve(n, k);
+    // your code here
+}
