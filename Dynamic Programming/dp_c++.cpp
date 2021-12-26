@@ -946,3 +946,40 @@ int eggDrop(int n, int k)
     return solve(n, k);
     // your code here
 }
+
+//Optimisation it above problem
+int dp[201][201];
+int solve(int N, int K)
+{
+    if (K == 0 || K == 1)
+        return K;
+    if (N == 1)
+        return K;
+    if (dp[N][K] != -1)
+        return dp[N][K];
+    int mn = INT_MAX;
+    for (int k = 1; k <= K - 1; k++)
+    {
+        int a;
+        int b;
+        if (dp[N - 1][k - 1] != -1)
+            a = dp[N - 1][k - 1];
+        else
+            a = solve(N - 1, k - 1);
+        if (dp[N][K - k] != -1)
+            b = dp[N][K - k];
+        else
+            b = solve(N, K - k);
+        int temp = 1 + max(a, b);
+        mn = min(mn, temp);
+    }
+    return dp[N][K] = mn;
+}
+//Function to find minimum number of attempts needed in
+//order to find the critical floor.
+int eggDrop(int n, int k)
+{
+    memset(dp, -1, sizeof(dp));
+    return solve(n, k);
+    // your code here
+}
