@@ -890,3 +890,31 @@ int countWays(int N, string S)
     return solve(S, i, j, isTrue) % 1003;
     // code here
 }
+//Scramble Strings
+//https://leetcode.com/problems/scramble-string/
+unordered_map<string, int> mp;
+bool ok(string s1, string s2)
+{
+
+    if (s1.length() != s2.length())
+        return false;
+    if (s1 == "" && s2 == "")
+        return true;
+    if (s1.compare(s2) == 0)
+        return true;
+    if (s1.length() <= 1)
+        return false;
+    if (mp.find(s1 + " " + s2) != mp.end())
+        return mp[s1 + " " + s2];
+    int n = s1.length();
+    for (int i = 1; i <= n - 1; i++)
+    {
+        if (((isScramble(s1.substr(0, i), s2.substr(n - i, i))) && (isScramble(s1.substr(i, n - i), s2.substr(0, n - i)))) || ((isScramble(s1.substr(0, i), s2.substr(0, i))) && (isScramble(s1.substr(i, n - i), s2.substr(i, n - i)))))
+            return mp[s1 + " " + s2] = true;
+    }
+    return mp[s1 + " " + s2] = false;
+}
+bool isScramble(string s1, string s2)
+{
+    return ok(s1, s2);
+}
