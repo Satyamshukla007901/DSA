@@ -983,3 +983,27 @@ int eggDrop(int n, int k)
     return solve(n, k);
     // your code here
 }
+//Diameter of Tree
+//https://practice.geeksforgeeks.org/problems/diameter-of-binary-tree/1
+{
+    if (root == NULL)
+        return 0;
+
+    int ld = solve(root->left, ans);
+    int rd = solve(root->right, ans);
+    int h = max(ld, rd) + 1;
+    int ok = max(h, ld + rd + 1);
+    ans = max(ans, ok);
+    return h;
+}
+// Function to return the diameter of a Binary Tree.
+int diameter(Node *root)
+{
+    if (root == NULL)
+        return 0;
+
+    int ans = INT_MIN;
+    solve(root, ans);
+    return ans;
+    // Your code here
+}
