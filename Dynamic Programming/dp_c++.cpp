@@ -1015,7 +1015,7 @@ int solve(TreeNode *root, int &maxi)
         return 0;
     int lSum = solve(root->left, maxi);
     int rSum = solve(root->right, maxi);
-    int h = max(max(lSum, rSum) + root->val, root->val);
+    int h = max(max(lSum, rSum) + root->val, root->val); //agar childrens dono negative hai toh kya zarurat hai unko lene ki
     int ok = max(h, lSum + rSum + root->val);
     maxi = max(maxi, ok);
     return h;
@@ -1028,4 +1028,36 @@ int maxPathSum(TreeNode *root)
     int maxi = INT_MIN;
     solve(root, maxi);
     return maxi;
+}
+//Max Path Sum between two leaves
+//https://practice.geeksforgeeks.org/problems/maximum-path-sum/1#
+int solve(Node *root, int &ans)
+{
+    if (root == NULL)
+        return 0;
+    if (root->left == NULL && root->right == NULL)
+        return root->data;
+    int lSum = solve(root->left, ans);
+    int rSum = solve(root->right, ans);
+    if (root->left == NULL)
+        return root->data + rSum;
+    if (root->right == NULL)
+        return root->data + lSum;
+    int h = max(lSum, rSum) + root->data;
+    ans = max(ans, lSum + rSum + root->data);
+
+    return h;
+}
+
+int maxPathSum(Node *root)
+{
+    if (root == NULL)
+        return 0;
+
+    int ans = INT_MIN;
+    int x = solve(root, ans);
+    if (ans == INT_MIN)
+        return x;
+    return ans;
+    // code here
 }
