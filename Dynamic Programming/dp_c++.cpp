@@ -1007,3 +1007,25 @@ int diameter(Node *root)
     return ans;
     // Your code here
 }
+//Maximum Path Sum
+//https://leetcode.com/problems/binary-tree-maximum-path-sum/submissions/
+int solve(TreeNode *root, int &maxi)
+{
+    if (root == NULL)
+        return 0;
+    int lSum = solve(root->left, maxi);
+    int rSum = solve(root->right, maxi);
+    int h = max(max(lSum, rSum) + root->val, root->val);
+    int ok = max(h, lSum + rSum + root->val);
+    maxi = max(maxi, ok);
+    return h;
+}
+int maxPathSum(TreeNode *root)
+{
+    if (root == NULL)
+        return 0;
+
+    int maxi = INT_MIN;
+    solve(root, maxi);
+    return maxi;
+}
