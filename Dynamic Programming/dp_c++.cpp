@@ -1061,3 +1061,25 @@ int maxPathSum(Node *root)
     return ans;
     // code here
 }
+//Longest Increasing Subsequence
+//https://practice.geeksforgeeks.org/problems/longest-increasing-subsequence-1587115620/1
+int longestSubsequence(int n, int a[])
+{
+    vector<int> dp(n);
+    for (int i = 0; i < n; i++)
+    {
+        int max = 0;
+        for (int j = 0; j < i; j++)
+        {
+            if (a[i] > a[j])
+            {
+                if (dp[j] > max)
+                    max = dp[j];
+            }
+        }
+        dp[i] = max + 1;
+    }
+    return *max_element(dp.begin(), dp.end());
+
+    // your code here
+}
