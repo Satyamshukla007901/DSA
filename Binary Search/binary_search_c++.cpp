@@ -190,23 +190,46 @@ int search(vector<int> &nums, int target)
     return -1;
 }
 //Search in Nearly Sorted Array
-int Search(vector<int> arr,int n,int x)
+int Search(vector<int> arr, int n, int x)
 {
     int s = 0;
-    int e = n-1;
-    while(s<=e)
-    {   
-        int mid = s + (e-s)/2;
-        if(arr[mid]==x)
+    int e = n - 1;
+    while (s <= e)
+    {
+        int mid = s + (e - s) / 2;
+        if (arr[mid] == x)
             return mid;
-        else if(mid-1>=s&&arr[mid-1]==x)
-            return mid-1;
-        else if(mid+1<=e&&arr[mid+1]==x)
-            return mid+1;
-        else if(arr[mid]<=x)
-            start = mid+2;
+        else if (mid - 1 >= s && arr[mid - 1] == x)
+            return mid - 1;
+        else if (mid + 1 <= e && arr[mid + 1] == x)
+            return mid + 1;
+        else if (arr[mid] <= x)
+            start = mid + 2;
         else
-            end=mid-2;
+            end = mid - 2;
     }
     return -1;
+}
+//Find Floor of an Element in a sorted array
+//https://practice.geeksforgeeks.org/problems/floor-in-a-sorted-array-1587115620/1
+int findFloor(vector<long long> v, long long n, long long x)
+{
+
+    int s = 0;
+    int ans = -1;
+    int e = n - 1;
+    while (s <= e)
+    {
+        int mid = s + (e - s) / 2;
+        if (v[mid] <= x)
+        {
+            ans = mid;
+            s = mid + 1;
+        }
+        else
+            e = mid - 1;
+    }
+    return ans;
+
+    // Your code here
 }
