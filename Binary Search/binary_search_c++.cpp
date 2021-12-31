@@ -280,3 +280,10 @@ int findPeakElement(vector<int> &nums)
         return 0;
     return n - 1;
 }
+//Find Maximum Element in a biotonic array(array which is wither increasing or decreasing or both)
+//https://practice.geeksforgeeks.org/problems/maximum-value-in-a-bitonic-array3001/1
+int findMaximum(int arr[], int n)
+{
+    return arr[findPeakElement(arr, n)];// Its the same function as above so dont get confused just u need only to change the paramenters from vector to array
+    // code here
+}
