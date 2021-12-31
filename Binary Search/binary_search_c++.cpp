@@ -284,6 +284,82 @@ int findPeakElement(vector<int> &nums)
 //https://practice.geeksforgeeks.org/problems/maximum-value-in-a-bitonic-array3001/1
 int findMaximum(int arr[], int n)
 {
-    return arr[findPeakElement(arr, n)];// Its the same function as above so dont get confused just u need only to change the paramenters from vector to array
+    return arr[findPeakElement(arr, n)]; // Its the same function as above so dont get confused just u need only to change the paramenters from vector to array
     // code here
+}
+// Search in a Biotonic Array
+//https://www.interviewbit.com/problems/search-in-bitonic-array/
+int findPeakElement(vector<int> &nums)
+{
+
+    int n = nums.size();
+    if (n == 1)
+        return 0;
+    int low = 0;
+    int high = n - 1;
+    while (low <= high)
+    {
+        int mid = low + (high - low) / 2;
+        if (mid - 1 >= 0 && mid + 1 < n && nums[mid - 1] < nums[mid] && nums[mid] > nums[mid + 1])
+            return mid;
+        else if (mid + 1 < n && nums[mid] < nums[mid + 1])
+        {
+            low = mid + 1;
+        }
+        else
+            high = mid - 1;
+    }
+    if (nums[0] > nums[1])
+        return 0;
+    return n - 1;
+}
+int rBinarySearch(vector<int> arr, int l, int n, int x)
+{
+    int s = l;
+    int e = n - 1;
+    while (s <= e)
+    {
+        int mid = s + (e - s) / 2;
+        if (arr[mid] == x)
+        {
+            return mid;
+        }
+        else if (arr[mid] < x)
+            e = mid - 1;
+        else
+            s = mid + 1;
+    }
+    return -1;
+}
+int binarySearch(vector<int> arr, int r, int n, int x)
+{
+    int s = 0;
+    int e = r;
+    while (s <= e)
+    {
+        int mid = s + (e - s) / 2;
+        if (arr[mid] == x)
+        {
+            return mid;
+        }
+        else if (arr[mid] < x)
+            s = mid + 1;
+        else
+            e = mid - 1;
+    }
+    return -1;
+}
+int Solution::solve(vector<int> &A, int B)
+{
+    int N = A.size();
+    int ok = A[findPeakElement(A)];
+    if (B <= ok && B >= A[N - 1])
+    {
+        return rBinarySearch(A, findPeakElement(A), N, B);
+    }
+    else
+    {
+        return binarySearch(A, findPeakElement(A), N, B);
+    }
+    return -1;
 }
