@@ -366,7 +366,7 @@ int Solution::solve(vector<int> &A, int B)
 //Search in a matrix
 //https://practice.geeksforgeeks.org/problems/search-in-a-matrix17201720/1
 int matSearch(int N, int M, int matrix[][M], int x)
-{
+{   ///O->(N+M)
     int i = 0;
     int j = M - 1;
     while (i < N && j >= 0)
