@@ -4,6 +4,7 @@
         "regex": "cpp",
         "xlocale": "cpp",
         "xstring": "cpp",
-        "filesystem": "cpp"
+        "filesystem": "cpp",
+        "valarray": "cpp"
     }
 }

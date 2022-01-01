@@ -366,7 +366,7 @@ int Solution::solve(vector<int> &A, int B)
 //Search in a matrix
 //https://practice.geeksforgeeks.org/problems/search-in-a-matrix17201720/1
 int matSearch(int N, int M, int matrix[][M], int x)
-{   ///O->(N+M)
+{ ///O->(N+M)
     int i = 0;
     int j = M - 1;
     while (i < N && j >= 0)
@@ -379,4 +379,50 @@ int matSearch(int N, int M, int matrix[][M], int x)
             i++;
     }
     return 0;
+}
+//Book Allocation problem
+//https://www.interviewbit.com/problems/allocate-books/
+bool isValid(vector<int> A, int N, int K, int mid)
+{
+    int cnt = 0;
+    int sum = 0;
+    for (int i = 0; i < N; i++)
+    {
+        if (sum + A[i] <= mid)
+        {
+            sum += A[i];
+        }
+        else
+        {
+            cnt++;
+            sum = A[i];
+        }
+    }
+    cnt++;
+    if (cnt > K)
+        return false;
+    return true;
+}
+int Solution::books(vector<int> &A, int B)
+{
+    int N = A.size();
+    if (N < B)
+        return -1;
+    int ans = -1;
+    int low = *max_element(A.begin(), A.end());
+    int high = 0;
+    for (auto &value : A)
+        high += value;
+    while (low <= high)
+    {
+        int mid = low + (high - low) / 2;
+        if (isValid(A, N, B, mid))
+        {
+            ans = mid;
+            high = mid - 1;
+        }
+        else
+            low = mid + 1;
+    }
+    return ans;
 }
