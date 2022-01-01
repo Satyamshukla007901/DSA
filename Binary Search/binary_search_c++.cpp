@@ -363,3 +363,20 @@ int Solution::solve(vector<int> &A, int B)
     }
     return -1;
 }
+//Search in a matrix
+//https://practice.geeksforgeeks.org/problems/search-in-a-matrix17201720/1
+int matSearch(int N, int M, int matrix[][M], int x)
+{
+    int i = 0;
+    int j = M - 1;
+    while (i < N && j >= 0)
+    {
+        if (matrix[i][j] == x)
+            return 1;
+        else if (matrix[i][j] > x)
+            j--;
+        else
+            i++;
+    }
+    return 0;
+}
