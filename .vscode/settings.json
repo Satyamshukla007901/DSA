@@ -5,6 +5,8 @@
         "xlocale": "cpp",
         "xstring": "cpp",
         "filesystem": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "queue": "cpp",
+        "stack": "cpp"
     }
 }

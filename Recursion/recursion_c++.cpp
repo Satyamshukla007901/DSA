@@ -29,3 +29,27 @@ void sort(vector<int> &vp)
     sort(vp);
     insert(v,temp);
 }
+//Sort a stack usign recursion
+//Geeks for geesks me hai
+void sInsert(stack<int> &st,int item)
+{
+    if(st.size()==0||st.top()<=item)
+    {
+        st.push(item);
+        return;
+    }
+    int ok = st.top();
+    st.pop();
+    sInsert(st,item);
+    st.push(ok);
+}
+void SortedStack :: sort()
+{
+    if(s.empty())
+        return;
+    int ok = s.top();
+    s.pop();
+    sort();
+    sInsert(s,ok);
+   //Your code here
+}
