@@ -74,3 +74,20 @@ void deleteMid(stack<int> &s, int sizeOfStack)
 
     ok(s, mid);
 }
+//kth grammer
+//https://leetcode.com/problems/k-th-symbol-in-grammar/submissions/
+int kthGrammar(int n, int k)
+{
+    if (n == 1)
+    {
+        return 0;
+    }
+    if (k > pow(2, n - 1) / 2)
+    {
+        return !kthGrammar(n, k - pow(2, n - 1) / 2);
+    }
+    else
+    {
+        return kthGrammar(n - 1, k);
+    }
+}
