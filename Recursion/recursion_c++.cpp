@@ -91,3 +91,21 @@ int kthGrammar(int n, int k)
         return kthGrammar(n - 1, k);
     }
 }
+//Tower of hanoi
+//https://practice.geeksforgeeks.org/problems/tower-of-hanoi-1587115621/1#
+long long cnt = 0;
+long long toh(int N, int from, int to, int aux)
+{
+    cnt++;
+    if (N == 1)
+    {
+        cout << "move disk " << N << " from rod " << from << " to rod " << to << endl;
+        return cnt;
+    }
+
+    toh(N - 1, from, aux, to);
+    cout << "move disk " << N << " from rod " << from << " to rod " << to << endl;
+    toh(N - 1, aux, to, from);
+    return cnt;
+    // Your code here
+}
