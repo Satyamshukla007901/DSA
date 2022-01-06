@@ -136,3 +136,27 @@ vector<string> AllPossibleStrings(string s)
     return vp;
     // Code here
 }
+//bit masking approach
+vector<string> AllPossibleStrings(string s)
+{
+    int n = s.length();
+    vector<string> ok;
+    int total = pow(2, n);
+    for (int i = 0; i < total; i++)
+    {
+        string op = "";
+        for (int j = 0; j < n; j++)
+        {
+            //  cout<<(i&(1<<j))<<endl;
+            if ((i & (1 << j)) == pow(2, j))
+            {
+
+                op += s[j];
+            }
+        }
+        if (op != "")
+            ok.push_back(op);
+    }
+    sort(ok.begin(), ok.end());
+    return ok;
+}
