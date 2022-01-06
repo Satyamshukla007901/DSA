@@ -160,3 +160,55 @@ vector<string> AllPossibleStrings(string s)
     sort(ok.begin(), ok.end());
     return ok;
 }
+//Print Unique
+//https://practice.geeksforgeeks.org/problems/subsets-1587115621/1
+void solve(string inp, string op, vector<string> &ok)
+{
+    if (inp == "")
+    {
+        if (op != "")
+            ok.push_back(op);
+        return;
+    }
+    string op1 = op;
+    string op2 = op;
+    op2 += inp[0];
+    inp.erase(inp.begin() + 0);
+    solve(inp, op1, ok);
+    solve(inp, op2, ok);
+}
+vector<vector<int>> AllSubsets(vector<int> arr, int n)
+{
+    vector<string> vp;
+    string s = "";
+    for (auto &value : arr)
+    {
+        s += to_string(value);
+    }
+    string op = "";
+    solve(s, op, vp);
+    sort(vp.begin(), vp.end());
+    set<string> ss;
+    for (auto &value : vp)
+    {
+        sort(value.begin(), value.end());
+        ss.insert(value);
+    }
+    vector<string> ans;
+    for (auto &value : ss)
+        ans.push_back(value);
+    vector<vector<int>> ok;
+    ok.push_back(vector<int>());
+    for (auto &value : ans)
+    {
+        vector<int> temp;
+        for (auto &val : value)
+        {
+            temp.push_back(val - '0');
+        }
+        ok.push_back(temp);
+    }
+
+    return ok;
+    // code here
+}
