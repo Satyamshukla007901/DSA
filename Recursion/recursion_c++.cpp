@@ -109,3 +109,30 @@ long long toh(int N, int from, int to, int aux)
     return cnt;
     // Your code here
 }
+//Power Set
+//https://practice.geeksforgeeks.org/problems/power-set4302/1/
+void solve(string inp, string op, vector<string> &ok)
+{
+    if (inp == "")
+    {
+        if (op != "")
+            ok.push_back(op);
+        return;
+    }
+    string op1 = op;
+    string op2 = op;
+    op2 += inp[0];
+    inp.erase(inp.begin() + 0);
+    solve(inp, op1, ok);
+    solve(inp, op2, ok);
+}
+vector<string> AllPossibleStrings(string s)
+{
+    vector<string> vp;
+
+    string op = "";
+    solve(s, op, vp);
+    sort(vp.begin(), vp.end());
+    return vp;
+    // Code here
+}
