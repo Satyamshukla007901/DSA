@@ -242,3 +242,42 @@ vector<string> permutation(string S)
     return ans;
     // Code Here
 }
+//LEtter Case Permutation
+///https://leetcode.com/problems/letter-case-permutation/submissions/
+void solve(string s, string &op, vector<string> &ok)
+{
+    if (s == "")
+    {
+        ok.push_back(op);
+        return;
+    }
+    if (s[0] >= '0' && s[0] <= '9')
+    {
+        string op1 = op;
+        op1 += s[0];
+        s.erase(s.begin() + 0);
+        solve(s, op1, ok);
+        return;
+    }
+    else
+    {
+        string op1 = op;
+        string op2 = op;
+        op1 += s[0];
+        if (s[0] >= 'a' && s[0] <= 'z')
+            op2 += s[0] - 'a' + 'A';
+        else
+            op2 += s[0] - 'A' + 'a';
+        s.erase(s.begin() + 0);
+        solve(s, op1, ok);
+        solve(s, op2, ok);
+    }
+    return;
+}
+vector<string> letterCasePermutation(string s)
+{
+    vector<string> vp;
+    string op = "";
+    solve(s, op, vp);
+    return vp;
+}
