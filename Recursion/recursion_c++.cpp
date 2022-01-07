@@ -212,3 +212,33 @@ vector<vector<int>> AllSubsets(vector<int> arr, int n)
     return ok;
     // code here
 }
+//Permutation With Space
+//https://practice.geeksforgeeks.org/problems/permutation-with-spaces3627/1#
+void solve(string str, string &op, vector<string> &ok)
+{
+    if (str == "")
+    {
+        if (op != "")
+            ok.push_back(op);
+        return;
+    }
+    string op1 = op;
+    op1 += str[0];
+    string op2 = op;
+    op2 += " ";
+    op2 += str[0];
+    str.erase(str.begin() + 0);
+    solve(str, op1, ok);
+    solve(str, op2, ok);
+}
+vector<string> permutation(string S)
+{
+    vector<string> ans;
+    string op = "";
+    op += S[0];
+    S.erase(S.begin() + 0);
+    solve(S, op, ans);
+    sort(ans.begin(), ans.end());
+    return ans;
+    // Code Here
+}
