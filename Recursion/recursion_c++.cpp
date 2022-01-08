@@ -281,3 +281,41 @@ vector<string> letterCasePermutation(string s)
     solve(s, op, vp);
     return vp;
 }
+//Genreate balanced Parathewsis
+//https://practice.geeksforgeeks.org/problems/generate-all-possible-parentheses/1#
+void solve(int o, int c, string &op, vector<string> &ans)
+{
+    if (o == 0 && c == 0)
+    {
+        ans.push_back(op);
+        return;
+    }
+    if (o != 0)
+    {
+        string op1 = op;
+        op1 += "(";
+
+        solve(o - 1, c, op1, ans);
+    }
+
+    if (c > o)
+    {
+        string op2 = op;
+        op2 += ")";
+
+        solve(o, c - 1, op2, ans);
+    }
+    return;
+}
+
+public:
+vector<string> AllParenthesis(int n)
+{
+    int o = n;
+    int c = n;
+    string op = "";
+    vector<string> ans;
+    solve(o, c, op, ans);
+    return ans;
+    // Your code goes here
+}
