@@ -319,3 +319,40 @@ vector<string> AllParenthesis(int n)
     return ans;
     // Your code goes here
 }
+//Print N bit Binary Number Such That #1's >= #0's
+//https://practice.geeksforgeeks.org/problems/print-n-bit-binary-numbers-having-more-1s-than-0s0252/1#
+void solve(int o, int z, string &ok, vector<string> &ans, int N)
+{
+    if (N == 0)
+    {
+        ans.push_back(ok);
+        return;
+    }
+
+    if (o > z)
+    {
+        string op1 = ok;
+        string op2 = ok;
+        op1 += "1";
+        op2 += "0";
+        solve(o + 1, z, op1, ans, N - 1);
+        solve(o, z + 1, op2, ans, N - 1);
+    }
+    else if (o == z)
+    {
+        string op1 = ok;
+        op1 += "1";
+        solve(o + 1, z, op1, ans, N - 1);
+    }
+    return;
+}
+vector<string> NBitBinary(int N)
+{
+    int o = 1;
+    int z = 0;
+    string op = "1";
+    vector<string> ok;
+    solve(o, z, op, ok, N - 1);
+    return ok;
+    // Your code goes here
+}
