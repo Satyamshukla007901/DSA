@@ -356,3 +356,28 @@ vector<string> NBitBinary(int N)
     return ok;
     // Your code goes here
 }
+//Josephus Problem
+//https://practice.geeksforgeeks.org/problems/game-of-death-in-a-circle1840/1#
+void solve(vector<int> &vp, int k, int idx, int &ans)
+{
+    if (vp.size() == 1)
+    {
+        ans = vp[0];
+        return;
+    }
+    idx = (idx + k) % vp.size();
+    vp.erase(vp.begin() + idx);
+    solve(vp, k, idx, ans);
+}
+int safePos(int n, int k)
+{
+
+    vector<int> vp;
+    for (int i = 1; i <= n; i++)
+        vp.push_back(i);
+    int index = 0;
+    int ans = -1;
+    solve(vp, k - 1, index, ans);
+    return ans;
+    // code here
+}
