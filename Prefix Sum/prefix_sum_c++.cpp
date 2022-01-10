@@ -63,6 +63,67 @@ bool subArrayExists(int arr[], int n)
     return false;
     //Your code here
 }
+//https://www.geeksforgeeks.org/find-prime-number-can-written-sum-consecutive-primes/
+#define LIMIT 1000000
+long long i, j;
+long long prime_flag[LIMIT];
+void calculate_prime_flag()
+{
+    prime_flag[0] = prime_flag[1] = 1;
+    for (i = 2; i < LIMIT; i++)
+    {
+        // to avoid overflow u can also set i*i<LIMIT
+        if (prime_flag[i] == 0)
+        {
+            for (j = i * i; j < LIMIT; j += i)
+            {
+                prime_flag[j] = 1;
+            }
+        }
+    }
+    //0 -> prime
+    //1 -> not prime
+}
+int solve(int N)
+{
+    calculate_prime_flag();
+    
+    vector<int> primes;
+    for(int i=1;i<=10000;i++)
+    {
+        if(prime_flag[i]==0)
+        {
+            primes.push_back(i);
+        }
+    }
+    vector<int> prefix(primes.size(),0);
+    prefix[0]=primes[0];
+    for(int i=1;i<primes.size();i++)
+    {
+        prefix[i]=prefix[i-1]+primes[i];
+    }
+    int max_l = INT_MIN;
+    int ans=-1;
+    for(int i=0;primes[i]<=N;i++)
+    {
+        for(int j=0;j<i;j++)
+        {
+            if(prefix[i]-prefix[j]>N)
+                break;
+            
+            int sum = prefix[i]-prefix[j];
+            if(binary_search(primes.begin(),primes.end(),sum))
+            {
+                if(i-j+1>max_l)
+                {
+                    max_l=i-j+1;
+                    ans=sum;
+                }
+            }
+        }
+    }
+    return ans;
+}
 int32_t main()
 {
     return 0;
