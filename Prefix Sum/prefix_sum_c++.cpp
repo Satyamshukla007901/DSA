@@ -87,42 +87,71 @@ void calculate_prime_flag()
 int solve(int N)
 {
     calculate_prime_flag();
-    
+
     vector<int> primes;
-    for(int i=1;i<=10000;i++)
+    for (int i = 1; i <= 10000; i++)
     {
-        if(prime_flag[i]==0)
+        if (prime_flag[i] == 0)
         {
             primes.push_back(i);
         }
     }
-    vector<int> prefix(primes.size(),0);
-    prefix[0]=primes[0];
-    for(int i=1;i<primes.size();i++)
+    vector<int> prefix(primes.size(), 0);
+    prefix[0] = primes[0];
+    for (int i = 1; i < primes.size(); i++)
     {
-        prefix[i]=prefix[i-1]+primes[i];
+        prefix[i] = prefix[i - 1] + primes[i];
     }
     int max_l = INT_MIN;
-    int ans=-1;
-    for(int i=0;primes[i]<=N;i++)
+    int ans = -1;
+    for (int i = 0; primes[i] <= N; i++)
     {
-        for(int j=0;j<i;j++)
+        for (int j = 0; j < i; j++)
         {
-            if(prefix[i]-prefix[j]>N)
+            if (prefix[i] - prefix[j] > N)
                 break;
-            
-            int sum = prefix[i]-prefix[j];
-            if(binary_search(primes.begin(),primes.end(),sum))
+
+            int sum = prefix[i] - prefix[j];
+            if (binary_search(primes.begin(), primes.end(), sum))
             {
-                if(i-j+1>max_l)
+                if (i - j + 1 > max_l)
                 {
-                    max_l=i-j+1;
-                    ans=sum;
+                    max_l = i - j + 1;
+                    ans = sum;
                 }
             }
         }
     }
     return ans;
+}
+//Maximum occcured integer
+//https://www.geeksforgeeks.org/maximum-occurred-integer-n-ranges/
+int maxOccured(int L[], int R[], int n, int maxx)
+{
+    int prefix[1000001];
+    for (int i = 0; i < maxx; i++)
+        prefix[i] = 0;
+    for (int i = 0; i < n; i++)
+    {
+        prefix[L[i]]++;
+        prefix[R[i] + 1]--;
+    }
+    for (int i = 1; i < maxx; i++)
+    {
+        prefix[i] += prefix[i - 1];
+    }
+    int maxe = INT_MIN;
+    int ans = -1;
+    for (int i = 0; i < maxx; i++)
+    {
+        if (prefix[i] > maxe)
+        {
+            ans = i;
+        }
+        maxe = max(maxe, prefix[i]);
+    }
+    return ans;
+    // Your code here
 }
 int32_t main()
 {
