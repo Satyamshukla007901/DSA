@@ -41,6 +41,28 @@ string equilibrium(int *arr, int n)
     return "NO";
     // code here
 }
+//Subarray with 0 sum
+//https://practice.geeksforgeeks.org/problems/subarray-with-0-sum-1587115621/1/
+bool subArrayExists(int arr[], int n)
+{
+
+    vector<int> prefix(n, 0);
+    prefix[0] = arr[0];
+    for (int i = 1; i < n; i++)
+    {
+        prefix[i] = prefix[i - 1] + arr[i];
+    }
+    sort(prefix.begin(), prefix.end());
+    for (int i = 0; i < n - 1; i++)
+    {
+        if (prefix[i] == prefix[i + 1] || prefix[i] == 0)
+        {
+            return true;
+        }
+    }
+    return false;
+    //Your code here
+}
 int32_t main()
 {
     return 0;
