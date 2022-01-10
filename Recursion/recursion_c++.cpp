@@ -381,3 +381,33 @@ int safePos(int n, int k)
     return ans;
     // code here
 }
+//Phone Pad Probelm
+//https://leetcode.com/problems/letter-combinations-of-a-phone-number/submissions/
+void solve(string digits, string &op, vector<string> &ans, string map[])
+{
+    if (digits == "")
+    {
+        ans.push_back(op);
+        return;
+    }
+    int val = digits[0] - '0';
+    string valu = map[val];
+    digits.erase(digits.begin() + 0);
+    for (int i = 0; i < valu.length(); i++)
+    {
+        string op1 = op;
+        op1 += valu[i];
+        solve(digits, op1, ans, map);
+    }
+}
+vector<string> letterCombinations(string digits)
+{
+    vector<string> ans;
+
+    if (digits == "")
+        return ans;
+    string op = "";
+    string mapping[10] = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+    solve(digits, op, ans, mapping);
+    return ans;
+}
