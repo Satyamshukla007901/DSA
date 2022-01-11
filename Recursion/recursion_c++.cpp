@@ -411,3 +411,29 @@ vector<string> letterCombinations(string digits)
     solve(digits, op, ans, mapping);
     return ans;
 }
+//https://leetcode.com/problems/permutations/submissions/
+//Permutations
+void solve(vector<int> nums, vector<int> &op, vector<vector<int>> &ans)
+{
+    if (nums.size() == 0)
+    {
+        ans.push_back(op);
+        return;
+    }
+    vector<int> temp = nums;
+    for (int i = 0; i < nums.size(); i++)
+    {
+        vector<int> help = op;
+        help.push_back(nums[i]);
+        nums.erase(nums.begin() + i);
+        solve(nums, help, ans);
+        nums = temp;
+    }
+}
+vector<vector<int>> permute(vector<int> &nums)
+{
+    vector<vector<int>> ans;
+    vector<int> ok;
+    solve(nums, ok, ans);
+    return ans;
+}
