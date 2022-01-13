@@ -53,6 +53,64 @@ int maximumSumSubarray(int K, vector<int> &Arr, int N)
     return max_sum;
     // code here
 }
+//First negative integer in every window of size k
+//https://practice.geeksforgeeks.org/problems/first-negative-integer-in-every-window-of-size-k3345/1#
+//My approach
+vector<long long> printFirstNegativeInteger(long long int A[],
+                                            long long int N, long long int K)
+{
+    vector<long long> ans;
+    int i = 0;
+    int j = 0;
+    priority_queue<int, vector<int>, greater<int>> idx;
+    for (int i = 0; i < N; i++)
+    {
+        if (A[i] < 0)
+        {
+            idx.push(i);
+            break;
+        }
+    }
+    while (j < N)
+    {
+        if (A[j] < 0)
+        {
+            idx.push(j);
+        }
+        if (j - i + 1 == K)
+        {
+            if (idx.empty())
+                ans.push_back(0);
+            else if (idx.top() >= i && idx.top() <= j)
+            {
+                ans.push_back(A[idx.top()]);
+            }
+            else
+            {
+                while ((!idx.empty()) && (!(idx.top() >= i && idx.top() <= j)))
+                {
+                    idx.pop();
+                }
+                if (idx.empty())
+                {
+                    ans.push_back(0);
+                }
+                else
+                {
+                    ans.push_back(A[idx.top()]);
+                }
+            }
+
+            i++;
+            j++;
+        }
+        else
+        {
+            j++;
+        }
+    }
+    return ans;
+}
 int32_t main()
 {
     return 0;
