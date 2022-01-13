@@ -476,3 +476,84 @@ vector<vector<int>> permute(vector<int> &nums)
     solve(nums, 0, ans);
     return ans;
 }
+//Rat in a maze
+//https://practice.geeksforgeeks.org/problems/rat-in-a-maze-problem/1#
+bool isSafe(int x, int y, int n, vector<vector<int>> &visited, vector<vector<int>> m)
+{
+    if ((x >= 0 && x < n) && (y >= 0 && y < n) && (visited[x][y] == 0) && (m[x][y] == 1))
+    {
+        return true;
+    }
+    return false;
+}
+
+void solve(vector<vector<int>> &m, int n, vector<string> &ans, int x, int y, vector<vector<int>> v, string ok)
+{
+    if (x == n - 1 && y == n - 1)
+    {
+        ans.push_back(ok);
+        return;
+    }
+    v[x][y] = 1;
+
+    int newx = x + 1;
+    int newy = y;
+    if (isSafe(newx, newy, n, v, m))
+    {
+        ok.push_back('D');
+        solve(m, n, ans, newx, newy, v, ok);
+        ok.pop_back();
+    }
+
+    newx = x;
+    newy = y - 1;
+    if (isSafe(newx, newy, n, v, m))
+    {
+        ok.push_back('L');
+        solve(m, n, ans, newx, newy, v, ok);
+        ok.pop_back();
+    }
+
+    newx = x;
+    newy = y + 1;
+    if (isSafe(newx, newy, n, v, m))
+    {
+        ok.push_back('R');
+        solve(m, n, ans, newx, newy, v, ok);
+        ok.pop_back();
+    }
+
+    newx = x - 1;
+    newy = y;
+    if (isSafe(newx, newy, n, v, m))
+    {
+        ok.push_back('U');
+        solve(m, n, ans, newx, newy, v, ok);
+        ok.pop_back();
+    }
+
+    v[x][y] = 0;
+}
+
+vector<string> findPath(vector<vector<int>> &m, int n)
+{
+    if (m[0][0] == 0)
+        return vector<string>();
+
+    vector<string> ans;
+    int x = 0;
+    int y = 0;
+    vector<vector<int>> visited = m;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            visited[i][j] = 0;
+        }
+    }
+    string ok = "";
+    solve(m, n, ans, x, y, visited, ok);
+    sort(ans.begin(), ans.end());
+    return ans;
+    // Your code goes here
+}
