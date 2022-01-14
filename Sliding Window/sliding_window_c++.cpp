@@ -186,6 +186,60 @@ int search(string pat, string txt)
     return ans;
     // code here
 }
+//Verma ji Approach
+int search(string pat, string txt)
+{
+
+    int i = 0;
+    int j = 0;
+    int ans = 0;
+    unordered_map<char, int> mp;
+    for (auto &value : pat)
+        mp[value]++;
+    int N = txt.length();
+    int count = mp.size();
+    // map<char,int> ump;
+    while (j < N)
+    {
+        //Calculation
+        if (mp.find(txt[j]) != mp.end())
+        {
+            mp[txt[j]]--;
+            if (mp[txt[j]] == 0)
+                count--;
+        }
+        // ump[txt[j]]++;
+        if (j - i + 1 < pat.length())
+        {
+            j++;
+        }
+        else if (j - i + 1 == pat.length())
+        {
+            if (count == 0)
+                ans++;
+            if (mp.find(txt[i]) != mp.end())
+            {
+                mp[txt[i]]++;
+                if (mp[txt[i]] == 1)
+                    count++;
+            }
+            //ans using calculation
+            // if(mp==ump)
+            // {
+            //     ans++;
+            // }
+            // ump[txt[i]]--;
+            // if(ump[txt[i]]<=0)
+            // {
+            //     ump.erase(txt[i]);
+            // }
+            j++;
+            i++;
+        }
+    }
+    return ans;
+    // code here
+}
 int32_t main()
 {
     return 0;
