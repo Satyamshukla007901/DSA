@@ -143,6 +143,49 @@ vector<long long> printFirstNegativeInteger(long long int A[],
 
     return ans;
 }
+//Count Occurences ofAnagram
+//https://practice.geeksforgeeks.org/problems/count-occurences-of-anagrams5839/1
+int search(string pat, string txt)
+{
+
+    int i = 0;
+    int j = 0;
+    int ans = 0;
+    map<char, int> mp;
+    for (auto &value : pat)
+        mp[value]++;
+    int N = txt.length();
+    map<char, int> ump;
+    while (j < N)
+    {
+        //Calculation
+        ump[txt[j]]++;
+        if (j - i + 1 < pat.length())
+        {
+            j++;
+        }
+        else if (j - i + 1 == pat.length())
+        {
+            //ans using calculation
+            if (mp == ump)
+            {
+                ans++;
+            }
+            ump[txt[i]]--;
+            if (ump[txt[i]] <= 0)
+            {
+                ump.erase(txt[i]);
+            }
+            j++;
+            i++;
+        }
+        // for(auto &value:ump)
+        //     cout<<value.first<<" "<<value.second<<endl;
+        //cout<<endl;
+    }
+    return ans;
+    // code here
+}
 int32_t main()
 {
     return 0;
