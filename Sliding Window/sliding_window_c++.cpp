@@ -240,6 +240,46 @@ int search(string pat, string txt)
     return ans;
     // code here
 }
+//Sliding Window Maximum
+//https://www.interviewbit.com/problems/sliding-window-maximum/#
+#include <list>
+vector<int> Solution::slidingMaximum(const vector<int> &A, int B)
+{
+    if (B > A.size())
+    {
+        vector<int> ok;
+        ok.push_back(*max_element(A.begin(), A.end()));
+        return ok;
+    }
+    int i = 0;
+    int j = 0;
+    int N = A.size();
+    vector<int> ok;
+    list<int> st;
+
+    while (j < N)
+    {
+        //Calculation
+        while (st.size() > 0 && st.back() < A[j])
+            st.pop_back();
+        st.push_back(A[j]);
+        if (j - i + 1 < B)
+        {
+
+            j++;
+        }
+        else if (j - i + 1 == B)
+        {
+            ok.push_back(st.front());
+            if (A[i] == st.front())
+                st.pop_front();
+            j++;
+            i++;
+        }
+    }
+    return ok;
+}
+
 int32_t main()
 {
     return 0;
