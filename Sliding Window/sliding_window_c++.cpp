@@ -279,7 +279,55 @@ vector<int> Solution::slidingMaximum(const vector<int> &A, int B)
     }
     return ok;
 }
+//Longest Subarray with sum K
+//https://practice.geeksforgeeks.org/problems/longest-sub-array-with-sum-k0809/1/#
+int lenOfLongSubarr(int A[], int N, int K)
+{
+    /* Only for positive Nummbers
+        int i = 0;
+        int j = 0;int sum = 0;
+        int mx = 0;
+        while(j<N)
+        {
+            sum+=A[j];
+            if(sum<K)
+                j++;
+            else if(sum==K)
+            {
+                mx = max(j-i+1,mx);
+                j++;
+                
+            }
+            else if(sum>K)
+            {
+                while(sum>K)
+                {
+                    sum-=A[i];
+                    i++;
+                }
+                j++;
+            }
+        }
+        return mx;*/
 
+    int sum = 0;
+    int ans = 0;
+    unordered_map<int, int> mp;
+    for (int i = 0; i < N; i++)
+    {
+        sum += A[i];
+        if (sum == K)
+        {
+            ans = max(ans, i + 1);
+        }
+        if (mp.find(sum) == mp.end())
+            mp[sum] = i;
+        if (mp.find(sum - K) != mp.end())
+            ans = max(ans, i - mp[sum - K]);
+    }
+    return ans;
+    // Complete the function
+}
 int32_t main()
 {
     return 0;
