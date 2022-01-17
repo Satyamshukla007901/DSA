@@ -380,6 +380,70 @@ int matSearch(int N, int M, int matrix[][M], int x)
     }
     return 0;
 }
+//Kth Smallest number
+//https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/submissions/
+class Solution
+{
+public:
+    //Two Approaches se bana hai ywh questions ek verma ji ne karaya tha matrix sorted wala and dusra finding floor of a number
+    bool isPossible(vector<vector<int>> &matrix, int k, int ans)
+    {
+        int cnt = 0;
+        for (int i = 0; i < matrix[0].size(); i++)
+        {
+            int s = 0;
+            int e = matrix[0].size() - 1;
+            while (s <= e)
+            {
+                int mid = s + (e - s) / 2;
+                if (matrix[i][mid] <= ans)
+                {
+                    s = mid + 1;
+                }
+                else
+                {
+                    e = mid - 1;
+                }
+            }
+            cnt += s;
+        }
+        return cnt >= k;
+    }
+    int kthSmallest(vector<vector<int>> &matrix, int k)
+    {
+
+        int r = matrix.size();
+        int c = matrix[0].size();
+        /*
+        vector<int> vp(r*c);int idx = 0;
+        for(auto &value:matrix)
+        {
+            for(auto &val:value)
+            {
+                vp[idx++]=val;
+            }
+        }
+        sort(vp.begin(),vp.end());
+       return vp[k-1];*/
+        int s = matrix[0][0];
+        int ans = -1;
+        int e = matrix[r - 1][c - 1];
+        while (s <= e)
+        {
+            int mid = s + (e - s) / 2;
+            if (isPossible(matrix, k, mid))
+            {
+                ans = mid;
+                e = mid - 1;
+            }
+            else
+            {
+                s = mid + 1;
+            }
+        }
+        return ans;
+    }
+};
 //Book Allocation problem
 //https://www.interviewbit.com/problems/allocate-books/
 bool isValid(vector<int> A, int N, int K, int mid)
@@ -505,46 +569,48 @@ public:
 };
 //single element in a sorted array
 //https://leetcode.com/problems/single-element-in-a-sorted-array/submissions/
-class Solution {
+class Solution
+{
 public:
-    int singleNonDuplicate(vector<int>& nums) {
+    int singleNonDuplicate(vector<int> &nums)
+    {
         int s = 0;
-        int e = nums.size()-1;
-        if(nums.size()==1)
-                return nums[0];
-        while(s<=e)
+        int e = nums.size() - 1;
+        if (nums.size() == 1)
+            return nums[0];
+        while (s <= e)
         {
-            int mid = s + (e-s)/2;
-            if(mid-1>=0&&mid+1<nums.size()&&nums[mid-1]!=nums[mid]&&nums[mid+1]!=nums[mid])
+            int mid = s + (e - s) / 2;
+            if (mid - 1 >= 0 && mid + 1 < nums.size() && nums[mid - 1] != nums[mid] && nums[mid + 1] != nums[mid])
             {
                 return nums[mid];
             }
-            else if(mid+1<nums.size()&&mid==0&&nums[mid]!=nums[mid+1])
+            else if (mid + 1 < nums.size() && mid == 0 && nums[mid] != nums[mid + 1])
             {
                 return nums[mid];
             }
-            else if(mid-1>=0&&mid==nums.size()-1&&nums[mid-1]!=nums[mid])
+            else if (mid - 1 >= 0 && mid == nums.size() - 1 && nums[mid - 1] != nums[mid])
             {
                 return nums[mid];
             }
             //Cacth of the Problem :-  first occurence of every duyplicate is at even index before single occurence element and first occurence of every duplicate is at odd index after single occurence elemnt
-            else if(mid-1>=0&&nums[mid-1]==nums[mid])
+            else if (mid - 1 >= 0 && nums[mid - 1] == nums[mid])
             {
-                if((mid-1)%2==0)
+                if ((mid - 1) % 2 == 0)
                 {
-                    s = mid+1;
+                    s = mid + 1;
                 }
                 else
-                    e = mid-1;
+                    e = mid - 1;
             }
             else
             {
-                if((mid+1)%2==0)
+                if ((mid + 1) % 2 == 0)
                 {
-                    e = mid-1;
+                    e = mid - 1;
                 }
                 else
-                    s = mid+1;
+                    s = mid + 1;
             }
         }
         return 0;
