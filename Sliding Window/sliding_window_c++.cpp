@@ -369,3 +369,46 @@ int longestKSubstr(string s, int k)
     return ans;
     // your code here
 }
+//Longest substring with non repeating character
+//https://leetcode.com/problems/longest-substring-without-repeating-characters/submissions/
+class Solution
+{
+public:
+    int lengthOfLongestSubstring(string s)
+    {
+        int i = 0;
+        int N = s.length();
+        int ans = 0;
+        int j = 0;
+        unordered_map<char, int> mp;
+        while (j < N)
+        {
+            mp[s[j]]++;
+            bool flag = false;
+            if (mp[s[j]] == 2)
+                flag = true;
+
+            if (!flag)
+            {
+                ans = max(ans, j - i + 1);
+                j++;
+            }
+            else if (flag)
+            {
+                while (mp[s[i]] != 2)
+                {
+                    mp[s[i]]--;
+                    if (mp[s[i]] == 0)
+                        mp.erase(s[i]);
+                    i++;
+                }
+                mp[s[i]]--;
+                if (mp[s[i]] == 0)
+                    mp.erase(s[i]);
+                i++;
+                j++;
+            }
+        }
+        return ans;
+    }
+};
