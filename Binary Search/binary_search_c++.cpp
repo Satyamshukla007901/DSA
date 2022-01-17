@@ -426,3 +426,30 @@ int Solution::books(vector<int> &A, int B)
     }
     return ans;
 }
+//Binary Search on Floats
+//Cube root
+double diff(double n, double mid)
+{
+    return abs(n - mid);
+}
+int cubeRoot(int N)
+{
+    double s = 0;
+    double e = N;
+    double p = 0.0000001;
+    while (true)
+    {
+        double mid = s + (e - s) / 2;
+        double error = diff(N, mid);
+        if (error <= p)
+            return (int)mid;
+        else if ((mid * mid * mid) > N)
+        {
+            e = mid;
+        }
+        else
+            s = mid;
+    }
+    return 0;
+    // code here
+}
