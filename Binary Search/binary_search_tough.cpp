@@ -217,3 +217,42 @@ int main()
     // your code goes here
     return 0;
 }
+
+//Myapproach
+/*
+   ll N;
+   cin>>N;
+   vector<ll> a;
+   vector<ll> b;
+   for(int i=1;i<=N;i++)
+   {
+	   ll X;
+	   cin>>X;
+	   a.push_back(X);
+   }
+   for(int i=1;i<=N;i++)
+   {
+	   ll X;
+	   cin>>X;
+	   b.push_back(X);
+   }
+   int ans = 0;
+   for(int i=0;i<N;i++)
+   {
+	   int s = 0;
+	   int e = N-1;
+	   while(s<=e)
+	   {
+		   int mid = s + (e-s)/2;
+			if(b[mid]>=a[i])
+			{
+				ans=max(ans,mid-i);
+				s=mid+1;
+			}
+			else
+				e=mid-1;
+	   }
+		
+   }
+   cout<<ans<<endl;
+*/
