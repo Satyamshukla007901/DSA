@@ -24,7 +24,7 @@ public:
                     {
                         ump[val]++;
                     }
-                    cout << value << ump[value] << mp[value] << endl;
+                    // cout << value << ump[value] << mp[value] << endl;
                     ok = min(ump[value], ok);
                 }
 
