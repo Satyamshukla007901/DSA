@@ -1,0 +1,2 @@
+// you want to make adjacent ele sum even so to make it either remove all odd or all even 
+just take the minimum of both and substract them
