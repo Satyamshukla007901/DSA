@@ -412,3 +412,77 @@ public:
         return ans;
     }
 };
+//https://leetcode.com/problems/minimum-window-substring/submissions/
+//minimum window substring
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        int i = 0;
+        int j = 0;int x=0;
+        unordered_map<char,int> mp;
+        for(auto &value:t)
+                mp[value]++;
+        int count = mp.size();int ans = INT_MAX;string ok="";
+        while(j<s.length())
+        {
+           if(mp.find(s[j])!=mp.end())
+           {
+               mp[s[j]]--;
+               if(mp[s[j]]==0)
+                    count--;
+           }
+            if(count>0)
+            {
+                j++;
+            }
+            else if(count==0)
+            {
+                if(j-i+1<ans)
+                {
+                    ans=min(ans,j-i+1); 
+                    x=i;
+                    ok=s.substr(x,j-i+1);
+                }
+                        
+                
+                while(count==0)
+                {
+                    if(mp.find(s[i])==mp.end())
+                    {
+                        i++;
+                        if(j-i+1<ans)
+                        {
+                            ans=min(ans,j-i+1);
+                            x=i;
+                            ok=s.substr(x,ans);
+                        }
+                    }
+                    else
+                    {
+                        
+                        mp[s[i]]++;
+                        if(mp[s[i]]==1)
+                        {
+                            i++;
+                            count++;
+            
+                        }
+                        else
+                        {
+                            i++;
+                            if(j-i+1<ans)
+                            {
+                                ans=min(ans,j-i+1); 
+                                ok=s.substr(i,j-i+1);
+                            }   
+                        }
+                    }
+                }
+                j++;
+                
+            }
+        }
+
+        return ok;
+    }
+};
