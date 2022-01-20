@@ -1,0 +1,2 @@
+//when u have to find a sequence of odd length such that LIS(str) = LIS(reverse(str)) then u have to just create the sequece as this str1 str3 str5  .........  str6   str4 str2
+// for even legth just keep the strN/2 , str 1 str 3 ......str4 str2 

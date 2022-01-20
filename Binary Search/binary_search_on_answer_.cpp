@@ -50,7 +50,7 @@ public:
                 a += vp[idx];
                 idx++;
             }
-            if (a == 0)
+            if (a == 0)//if u can make even subarrays less than m then also ans possible
                 break;
         }
         if (idx != vp.size())
