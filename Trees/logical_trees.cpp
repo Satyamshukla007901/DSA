@@ -277,3 +277,36 @@ int main() {
     return 0;
 }
   // } Driver Code Ends
+
+
+  //https://practice.geeksforgeeks.org/problems/print-all-nodes-that-dont-have-sibling/1#
+  vector<int> solve(Node* node,vector<int> &vp)
+{
+    if(node==NULL)
+        return vp;
+   if(node->left==NULL&&node->right!=NULL)
+   {
+       vp.push_back(node->right->data);
+   }
+   else if(node->right==NULL&&node->left!=NULL)
+   {
+       vp.push_back(node->left->data);
+   }
+   solve(node->left,vp);
+   solve(node->right,vp);
+   return vp;
+}
+vector<int> noSibling(Node* node)
+{
+    vector<int> vp;
+   if(node==NULL)
+   {
+       return {-1};
+   }
+    solve(node,vp);
+    if(vp.size()==0)
+        vp.push_back(-1);
+    sort(vp.begin(),vp.end());
+    return vp;
+    // code here
+}
