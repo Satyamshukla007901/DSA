@@ -1,0 +1,20 @@
+// Based on inorder traversal
+//https://practice.geeksforgeeks.org/problems/print-bst-elements-in-given-range/1#
+  vector<int> ans;
+    vector<int> printNearNodes(Node *root, int low, int high) {
+        if(root==NULL)
+            return ans;
+        
+
+        printNearNodes(root->left,low,high);
+
+        if(root->data>=low&&root->data<=high)
+        {
+            ans.push_back(root->data);
+        }
+        
+        printNearNodes(root->right,low,high);
+        
+        return ans;
+        //code here   
+    }
