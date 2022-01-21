@@ -80,3 +80,52 @@ public:
         return ans;
     }
 };
+
+//Interesting Swal
+https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/submissions/
+class Solution {
+public:
+    bool isPossible(vector<int> vp,int m,int k ,int mid)
+    {
+        int cnt = 0;
+        int sz = 0;
+        for(int i=0;i<vp.size();i++)
+        {
+            if(vp[i]<=mid)
+            {
+                sz++;
+            }
+            else
+                sz=0;
+            if(sz==k)
+            {
+                sz=0;
+                cnt++;
+            }
+            if(cnt==m)
+                    return true;
+            
+        }
+       
+        return false;
+    }
+    int minDays(vector<int>& bloomDay, int m, int k) {
+        if(m*k>bloomDay.size())
+                return -1;
+        int s = *min_element(bloomDay.begin(),bloomDay.end());
+        int n = bloomDay.size();
+        int e = *max_element(bloomDay.begin(),bloomDay.end());int ans = -1;
+        while(s<=e)
+        {
+            int mid = s + (e-s)/2;
+            if(isPossible(bloomDay,m,k,mid))
+            {
+                ans = mid;
+                e=mid-1;
+            }
+            else
+                s=mid+1;
+        }
+        return ans;
+    }
+};
