@@ -18,3 +18,55 @@
         return ans;
         //code here   
     }
+
+//BT to bst
+ Node* insert(Node* root, int Key) {
+    Node* node = new Node(Key);
+    if(root==NULL)
+        return node;
+    
+    if(Key<root->data)
+    {
+        if(root->left)
+        {
+            insert(root->left,Key);
+        }
+        else
+            root->left=node;
+    }
+    else if(Key>root->data)
+    {
+        if(root->right)
+        {
+            insert(root->right,Key);
+        }
+        else
+        {
+            root->right=node;
+        }
+    }
+    return root;
+    // Your code here
+}
+    // The given root is the root of the Binary Tree
+    // Return the root of the generated BST
+    void solve(Node *root,Node* newroot)
+    {
+        if(root==NULL)
+            return;
+        newroot = insert(newroot,root->data);
+        solve(root->left,newroot);
+        solve(root->right,newroot);
+        return;
+    }
+    Node *binaryTreeToBST (Node *node)
+    {
+    
+        if(root==NULL)
+            return NULL;
+        Node* newroot = NULL;
+        solve(root,newroot);
+       
+        return newroot;
+        //Your code goes here
+    }
