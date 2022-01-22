@@ -70,3 +70,49 @@
         return newroot;
         //Your code goes here
     }
+
+// Leaf at same level
+    int height(Node* root)
+    {
+        if(root==NULL)
+            return 0;
+        return 1+max(height(root->left),height(root->right));
+    }
+    
+    bool check(Node *root)
+    {
+        if(root==NULL)
+            return true;
+        
+        if(root->left&&root->right&&height(root->left)!=height(root->right))
+        {
+            return false;
+        }
+        return check(root->left)&&check(root->right);
+        //Your code here
+    }
+
+//
+https://practice.geeksforgeeks.org/problems/is-binary-tree-heap/1
+
+     int height(Node* root)
+    {
+        if(root==NULL)
+            return 0;
+        return 1+max(height(root->left),height(root->right));
+    }
+    bool isHeap(struct Node* root) {
+        if(root==NULL)
+            return true;
+        
+        if(root->left&&root->right&&height(root->left)!=height(root->right))
+        {
+            return false;
+        }
+        if(root->left&&root->right&&(root->data<root->left->data||root->data<root->right->data))
+        {
+            return false;
+        }
+        return isHeap(root->left)&&isHeap(root->right);
+        // code here
+    }

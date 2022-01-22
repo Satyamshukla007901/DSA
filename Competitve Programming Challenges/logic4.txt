@@ -1,0 +1,7 @@
+To count the number of odd numbers in the range L to R
+if( both L and R are even then (R-L)/2)
+else (R-L)/2 + 1
+
+and for even numbers
+if( both L and R are even then (R-L)/2 + 1)
+else (R-L)/2
