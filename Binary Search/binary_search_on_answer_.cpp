@@ -170,3 +170,39 @@ public:
         return res;
     }
 };
+//https://leetcode.com/problems/koko-eating-bananas/submissions/
+class Solution {
+public:
+    int minEatingSpeed(vector<int>& piles, int h) {
+        int s =1;
+        int e = *max_element(piles.begin(),piles.end());
+        int ans = 1;
+        while(s<=e)
+        {
+            int mid = s + (e-s)/2;
+            int ok = 0;
+            for(auto value:piles)
+            {
+                if(value<mid)
+                {
+                    ok++;
+                }
+                else
+                {
+                    ok+=value/mid;
+                    value = value%mid;
+                    if(value!=0)
+                            ok++;
+                }
+            }
+            if(ok<=h)
+            {
+                ans = mid;
+                e = mid-1;
+            }
+            else
+                s=mid+1;
+        }
+        return ans;
+    }
+};
