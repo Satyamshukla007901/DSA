@@ -172,3 +172,62 @@ https://practice.geeksforgeeks.org/problems/longest-consecutive-sequence-in-bina
         return ans;
          //Code here
     }
+
+//https://practice.geeksforgeeks.org/problems/level-of-a-node-in-binary-tree/1
+    void solve(Node* root,int k,int x,int &level)
+    {
+        if(root==NULL)
+            return;
+        if(root->data==k)
+        {
+            level=x;return;
+        }
+        solve(root->left,k,x+1,level);
+        solve(root->right,k,x+1,level);
+    }
+    int getLevel(struct Node *node, int target)
+    {
+        if(node==NULL)
+            return 0;
+        int ans = 0;
+        solve(node,target,1,ans);
+        
+        return ans;
+    	//code here
+    }
+
+
+/Ancestors in BST
+    void solve(Node* root,int x,bool &flag,vector<int> &vp)
+    {
+        if(root==NULL)
+            return;
+
+        if(root->data==x)
+        {
+            flag = true;
+            return;
+        }
+
+        if(flag==false)
+            solve(root->left,x,flag,vp);
+        if(flag==false)
+            solve(root->right,x,flag,vp);
+        if(flag)
+        {
+            vp.push_back(root->data);
+        }
+    }
+    vector<int> Ancestors(struct Node *root, int target)
+    {
+        vector<int> vp;
+        if(root==NULL)
+        {
+            
+            return vp;
+        }
+        bool flag = false;
+        solve(root,target,flag,vp);
+        return vp;
+         // Code here
+    }
