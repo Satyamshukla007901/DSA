@@ -116,3 +116,33 @@ https://practice.geeksforgeeks.org/problems/is-binary-tree-heap/1
         return isHeap(root->left)&&isHeap(root->right);
         // code here
     }
+
+//If BST contains a ded end
+// check for leaf x-1 and x+1 are present in bst or not
+void solve(Node* root,set<int> &s)
+{
+    if(root==NULL)
+        return;
+    
+    s.insert(root->data);
+    solve(root->left,s);
+    solve(root->right,s);
+}
+bool test(Node* root,set<int> &s)
+{
+    if(root==NULL)
+        return false;
+    
+    if(root->left==NULL&&root->right==NULL&&root->data==1&&s.find(root->data+1)!=s.end())
+        return true;
+    else if(root->left==NULL&&root->right==NULL&&s.find(root->data+1)!=s.end()&&s.find(root->data-1)!=s.end())
+        return true;
+    return test(root->left,s)||test(root->right,s);
+}
+bool isDeadEnd(Node *root)
+{
+    set<int> s;
+    solve(root,s);
+    return test(root,s);
+    //Your code here
+}
