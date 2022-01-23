@@ -1,0 +1,3 @@
+// to calculate into subsets suck that mean of A set plus mean of B is maximum
+so best way is to set the max number in first set and second set consist of remaining elements
+max + (sum of N-1)/N-1
