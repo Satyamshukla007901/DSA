@@ -146,3 +146,29 @@ bool isDeadEnd(Node *root)
     return test(root,s);
     //Your code here
 }
+
+//Longest Consecutive Sequence
+https://practice.geeksforgeeks.org/problems/longest-consecutive-sequence-in-binary-tree/1#
+    void solve(Node* root,int ok,int test,int &ans)
+    {
+        if(root==NULL)
+            return;
+        if(root->data==test)
+            ok++;
+        else
+            ok=1;
+        ans = max(ans,ok);
+        solve(root->left,ok,root->data+1,ans);
+        solve(root->right,ok,root->data+1,ans);
+    }
+    int longestConsecutive(Node* root)
+    {
+        if(root==NULL)
+            return -1;
+        int ans = 0;int x = root->data;
+        solve(root,0,x,ans);
+        if(ans==1)
+            return -1;
+        return ans;
+         //Code here
+    }
