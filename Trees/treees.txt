@@ -394,3 +394,62 @@ vector<vector<int>> levelOrder(Node *root)
         return new Node(-1);
         //code here
     }
+
+Depth of a node
+https://practice.geeksforgeeks.org/problems/depth-of-node/1#
+    void solve(Node* root,int &ans,int cnt)
+    {
+        if(root==NULL)
+            return;
+        
+        if(cnt%2==1&&root->left==NULL&&root->right==NULL)
+        {
+            ans=max(ans,cnt);
+        }
+        solve(root->left,ans,cnt+1);
+        solve(root->right,ans,cnt+1);
+    }
+    int depthOfOddLeaf(Node *root)
+    {
+        if(root==NULL)
+            return 0;
+        int ans = 0;
+        solve(root,ans,1);
+        return ans;
+        //code here
+    }
+
+//Predecesor and succesor
+void findPreSuc(Node* root, Node*& pre, Node*& suc, int key)
+{
+    vp.clear();
+    inorder(root);
+    if(root==NULL)
+    {
+        pre=new Node(-1);
+        suc=new Node(-1);return;
+    }
+    pre = new Node(-1);
+    suc = new Node(-1);
+    for(int i=0;i<vp.size();i++)
+    {
+        if(vp[i]<key)
+        {
+            pre->key = vp[i];
+        }
+        else
+            break;
+    }
+    for(int i=vp.size()-1;i>=0;i--)
+    {
+        if(vp[i]>key)
+        {
+            suc->key = vp[i];
+        }
+        else
+            break;
+    }
+    
+// Your code goes here
+
+}
