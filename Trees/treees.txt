@@ -261,3 +261,84 @@ vector<vector<int>> Paths(Node* root)
     return vp;
     // Code here
 }
+
+//Max Min in a binary tree
+    int maxe=INT_MIN;
+    int findMax(Node *root)
+    {
+        if(root==NULL)
+            return -1;
+        maxe=max(maxe,root->data);
+        findMax(root->left);
+        findMax(root->right);
+        return maxe;
+        //code here
+    }
+    int mine=INT_MAX;
+    int findMin(Node *root)
+    {
+        if(root==NULL)
+            return -1;
+        mine=min(mine,root->data);
+        findMin(root->left);
+        findMin(root->right);
+        return mine;
+        //code here
+    }
+
+//Check if tree is perfect binary Tree
+https://practice.geeksforgeeks.org/problems/perfect-binary-tree/1
+    bool isPerfect(Node *root)
+    {
+        if(root==NULL)
+            return true;
+        if(root->left==NULL&&root->right!=NULL)
+        {
+            return false;
+        }
+        if(root->right==NULL&&root->left!=NULL)
+            return false;
+        if(height(root->left)!=height(root->right))
+            return false;
+        return isPerfect(root->left)&&isPerfect(root->right);
+        //code here
+    }
+
+//https://practice.geeksforgeeks.org/problems/full-binary-tree/1
+bool isFullTree (struct Node* root)
+{
+    if(root==NULL)
+        return true;
+    
+    if(root->left==NULL&&root->right!=NULL)
+        return false;
+    if(root->left!=NULL&&root->right==NULL)
+        return false;
+    return isFullTree(root->left)&&isFullTree(root->right);
+    
+//add code here.
+}
+
+//https://practice.geeksforgeeks.org/problems/symmetric-tree/1
+    bool solve(Node* r1,Node* r2)
+    {
+        if(r1==NULL&&r2==NULL)
+            return true;
+        if(r1==NULL&&r2!=NULL)
+            return false;
+        if(r1!=NULL&&r2==NULL)
+            return false;
+        if(r1->data!=r2->data)
+            return false;
+        return solve(r1->left,r2->right)&&solve(r1->right,r2->left);
+    }
+    bool isSymmetric(struct Node* root)
+    {
+        if(root==NULL)
+            return true;
+        
+        return solve(root,root);
+	    // Code here
+    }
+
+    
