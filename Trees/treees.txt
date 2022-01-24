@@ -231,3 +231,33 @@ https://practice.geeksforgeeks.org/problems/longest-consecutive-sequence-in-bina
         return vp;
          // Code here
     }
+
+//https://practice.geeksforgeeks.org/problems/root-to-leaf-paths/1#
+ void solve(Node* root,vector<int> ok,vector<vector<int>> &vp)
+ {
+     if(root==NULL)
+     {
+         return;
+     }
+     
+     ok.push_back(root->data);
+     if(root->left==NULL&&root->right==NULL)
+     {
+         
+         vp.push_back(ok);
+         return;
+     }
+     solve(root->left,ok,vp);
+     
+     solve(root->right,ok,vp);
+ }
+vector<vector<int>> Paths(Node* root)
+{
+    vector<vector<int>> vp;
+    if(root==NULL)
+        return vp;
+    vector<int> ok;
+    solve(root,ok,vp);
+    return vp;
+    // Code here
+}
