@@ -520,3 +520,36 @@ int verticalWidth(Node* root)
     return mp.size();
     // Code here
 }
+//https://practice.geeksforgeeks.org/problems/tilt-of-binary-tree/1#
+    // function should return the tilt of the tree
+    void sum(Node* root,int &s)
+    {
+        if(root==NULL)
+            return;
+        s+=root->data;
+        sum(root->left,s);
+        sum(root->right,s);
+    }
+    void solve(Node* root,int &ans)
+    {
+        if(root==NULL)
+            return;
+        
+        int left = 0;
+        int right = 0;
+        sum(root->left,left);
+        sum(root->right,right);
+        ans+=abs(left-right);
+        solve(root->left,ans);
+        solve(root->right,ans);
+    }
+    
+    int tiltTree(Node *root)
+    {
+        if(root==NULL)
+            return 0;
+        int ans = 0;
+        solve(root,ans);
+        return ans;
+        //code here
+    }
