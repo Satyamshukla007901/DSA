@@ -453,3 +453,24 @@ void findPreSuc(Node* root, Node*& pre, Node*& suc, int key)
 // Your code goes here
 
 }
+
+//Verttical sum
+//https://practice.geeksforgeeks.org/problems/vertical-sum/1
+    void solve(Node* root,map<int,int> &mp,int cnt)
+    {
+        if(root==NULL)
+            return;
+        
+        mp[cnt]+=root->data;
+        solve(root->left,mp,cnt-1);
+        solve(root->right,mp,cnt+1);
+    }
+    vector <int> verticalSum(Node *root) {
+        map<int,int> mp;int cnt =1;
+        solve(root,mp,cnt);
+        vector<int> ans;
+        for(auto &value:mp)
+            ans.push_back(value.second);
+        return ans;
+        // add code here.
+    }
