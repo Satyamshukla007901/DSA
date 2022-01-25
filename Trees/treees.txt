@@ -474,3 +474,49 @@ void findPreSuc(Node* root, Node*& pre, Node*& suc, int key)
         return ans;
         // add code here.
     }
+
+//https://practice.geeksforgeeks.org/problems/children-sum-parent/1#
+    int isSumProperty(Node *root)
+    {
+        if(root==NULL)
+        {
+            return true;
+        }
+        if(root->left==NULL&&root->right==NULL)
+            return true;
+        if(root->left&&root->right&&root->data!=(root->left->data+root->right->data))
+        {
+            return false;
+        }
+        else if(root->left&&root->right==NULL&&root->data!=(root->left->data+0))
+        {
+            return false;
+        }
+        else if(root->right&&root->left==NULL&&root->data!=(0+root->right->data))
+        {
+            return false;
+        }
+        return isSumProperty(root->left)&&isSumProperty(root->right);
+     // Add your code here
+    }
+
+//Vertical Width of Binary tree
+void solve(Node* root,map<int,int> &mp,int cnt)
+{
+    if(root==NULL)
+        return;
+    mp[cnt]+=root->data;
+    solve(root->left,mp,cnt-1);
+    solve(root->right,mp,cnt+1);
+    return;
+    
+}
+int verticalWidth(Node* root)
+{
+    if(root==NULL)
+        return 0;
+    map<int,int> mp;
+    solve(root,mp,0);
+    return mp.size();
+    // Code here
+}

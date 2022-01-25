@@ -192,3 +192,92 @@ https : //practice.geeksforgeeks.org/problems/maximum-rectangular-area-in-a-hist
     return ans;
     // Your code here
 }
+
+//Maximum Area in a binary Matrix
+//https://leetcode.com/problems/maximal-rectangle/submissions/
+long long getMaxArea(vector<long long> arr, int n)
+{
+    vector<long long> nsl(n);
+    stack<int> st;
+    st.push(0);
+    nsl[0] = -1;
+    for (int i = 1; i < n; i++)
+    {
+        if (!st.empty() && arr[st.top()] >= arr[i])
+        {
+            while (!st.empty() && arr[st.top()] >= arr[i])
+                st.pop();
+            if (st.empty())
+            {
+                nsl[i] = -1;
+            }
+            else
+                nsl[i] = st.top();
+        }
+        else if (st.empty())
+        {
+            nsl[i] = -1;
+        }
+        else
+        {
+            nsl[i] = st.top();
+        }
+        st.push(i);
+    }
+    // for(auto &value:nsl)
+    //     cout<<value<<" ";
+    // cout<<endl;
+    while (!st.empty())
+        st.pop();
+    vector<long long> nsr(n);
+    nsr[n - 1] = n;
+    st.push(n - 1);
+    for (int i = n - 2; i >= 0; i--)
+    {
+        if (!st.empty() && arr[st.top()] >= arr[i])
+        {
+            while (!st.empty() && arr[st.top()] >= arr[i])
+                st.pop();
+            if (st.empty())
+                nsr[i] = n;
+            else
+                nsr[i] = st.top();
+        }
+        else if (st.empty())
+            nsr[i] = n;
+        else
+            nsr[i] = st.top();
+        st.push(i);
+    }
+    // for(auto &value:nsr)
+    //     cout<<value<<" ";
+    // cout<<endl;
+    long long ans = 0;
+    for (int i = 0; i < n; i++)
+    {
+        ans = max(ans, arr[i] * (nsr[i] - nsl[i] - 1));
+    }
+    return ans;
+    // Your code here
+}
+int maximalRectangle(vector<vector<char>> &matrix)
+{
+    int ans = INT_MIN;
+    vector<long long> vp(matrix[0].size(), 0);
+    for (int i = 0; i < matrix.size(); i++)
+    {
+        for (int j = 0; j < matrix[0].size(); j++)
+        {
+            if (matrix[i][j] == '0')
+            {
+                vp[j] = 0;
+            }
+            else
+            {
+                vp[j]++;
+            }
+        }
+        ans = max((long long)ans, getMaxArea(vp, vp.size()));
+    }
+    return ans;
+}
