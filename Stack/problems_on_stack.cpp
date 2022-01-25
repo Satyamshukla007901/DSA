@@ -123,3 +123,72 @@ vector<int> calculateSpan(int price[], int n)
     return ans;
     // Your code here
 }
+
+//Maximum ectangular Area
+https : //practice.geeksforgeeks.org/problems/maximum-rectangular-area-in-a-histogram-1587115620/1#
+        long long
+        getMaxArea(long long arr[], int n)
+{
+    vector<long long> nsl(n);
+    stack<int> st;
+    st.push(0);
+    nsl[0] = -1;
+    for (int i = 1; i < n; i++)
+    {
+        if (!st.empty() && arr[st.top()] >= arr[i])
+        {
+            while (!st.empty() && arr[st.top()] >= arr[i])
+                st.pop();
+            if (st.empty())
+            {
+                nsl[i] = -1;
+            }
+            else
+                nsl[i] = st.top();
+        }
+        else if (st.empty())
+        {
+            nsl[i] = -1;
+        }
+        else
+        {
+            nsl[i] = st.top();
+        }
+        st.push(i);
+    }
+    // for(auto &value:nsl)
+    //     cout<<value<<" ";
+    // cout<<endl;
+    while (!st.empty())
+        st.pop();
+    vector<long long> nsr(n);
+    nsr[n - 1] = n;
+    st.push(n - 1);
+    for (int i = n - 2; i >= 0; i--)
+    {
+        if (!st.empty() && arr[st.top()] >= arr[i])
+        {
+            while (!st.empty() && arr[st.top()] >= arr[i])
+                st.pop();
+            if (st.empty())
+                nsr[i] = n;
+            else
+                nsr[i] = st.top();
+        }
+        else if (st.empty())
+            nsr[i] = n;
+        else
+            nsr[i] = st.top();
+        st.push(i);
+    }
+    // for(auto &value:nsr)
+    //     cout<<value<<" ";
+    // cout<<endl;
+    long long ans = 0;
+    for (int i = 0; i < n; i++)
+    {
+        ans = max(ans, arr[i] * (nsr[i] - nsl[i] - 1));
+    }
+    return ans;
+    // Your code here
+}
