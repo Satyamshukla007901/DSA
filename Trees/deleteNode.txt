@@ -1,0 +1,56 @@
+//https://practice.geeksforgeeks.org/problems/delete-a-node-from-bst/1
+//You want to delete a node so if you find it then if it is a leaf then replace it by NULL
+//it it contains one child replace by it
+// if two child then either by inorder suuccesor or inordere predeccesor
+
+node *deleteNode(node *root, int X) {
+    if(root==NULL)
+        return NULL;
+    
+    if(root->key==X)
+    {
+        if(root->left==NULL&&root->right==NULL)
+            return NULL;
+        else if(root->left==NULL)
+        {
+            return root->right;
+        }
+        else if(root->right==NULL)
+        {
+            return root->left;
+        }
+       node* temp = root->right;
+        while(temp&&temp->left)
+        {
+            temp=temp->left;
+        }
+        root->key=temp->key;
+        root->right = deleteNode(root->right,temp->key);
+        return root;
+    }
+    else if(root->key<X)
+        root->right=deleteNode(root->right,X);
+    root->left=deleteNode(root->left,X);
+    return root;
+    // your code goes here
+}
+//https://practice.geeksforgeeks.org/problems/remove-half-nodes/1#
+Node *RemoveHalfNodes(Node *root)
+{
+    if(root==NULL)
+        return NULL;
+    if(root->left==NULL&&root->right==NULL)
+        return root;
+    else if(root->left==NULL&&root->right)
+    {
+        return RemoveHalfNodes(root->right);
+    }
+    else if(root->right==NULL&&root->left)
+    {
+        return RemoveHalfNodes(root->left);
+    }
+    root->left=RemoveHalfNodes(root->left);
+    root->right=RemoveHalfNodes(root->right);
+    return root;
+   //add code here.
+}

@@ -553,3 +553,215 @@ int verticalWidth(Node* root)
         return ans;
         //code here
     }
+
+//change key in BST
+https://practice.geeksforgeeks.org/problems/implement-change-key-in-bst/1#
+node* insert(node* root, int Key) {
+    // node* node = new node(Key);
+    node* noe = new node(Key);
+    if(root==NULL)
+        return noe;
+    
+    if(Key<root->key)
+    {
+        if(root->left)
+        {
+            insert(root->left,Key);
+        }
+        else
+            root->left=noe;
+    }
+    else if(Key>=root->key)
+    {
+        if(root->right)
+        {
+            insert(root->right,Key);
+        }
+        else
+        {
+            root->right=noe;
+        }
+    }
+    return root;
+    // Your code here
+}
+node *deleteNode(node *root, int X) {
+    if(root==NULL)
+        return NULL;
+    
+    if(root->key==X)
+    {
+        if(root->left==NULL&&root->right==NULL)
+            return NULL;
+        else if(root->left==NULL)
+        {
+            return root->right;
+        }
+        else if(root->right==NULL)
+        {
+            return root->left;
+        }
+       node* temp = root->right;
+        while(temp&&temp->left)
+        {
+            temp=temp->left;
+        }
+        root->key=temp->key;
+        root->right = deleteNode(root->right,temp->key);
+        return root;
+    }
+    else if(root->key<X)
+        root->right=deleteNode(root->right,X);
+    root->left=deleteNode(root->left,X);
+    return root;
+    // your code goes here
+}
+struct node *changeKey(struct node *node, int oldVal, int newVal)
+{
+    
+    if(node==NULL)
+        return NULL;
+    
+    node = deleteNode(node,oldVal);
+    node = insert(node,newVal);
+    return node;
+    
+	// Code here
+}
+
+//MEdian in BST
+vector<int> vp;
+void inorder(struct Node *root)
+{
+    if (!root)
+        return;
+
+    inorder(root->left);
+    // cout << root->data << " ";
+    vp.push_back(root->data);
+    inorder(root->right);
+}
+float findMedian(struct Node *root)
+{
+    vp.clear();
+    inorder(root);
+    if(vp.size()%2==0)
+    {
+        return (float)(vp[vp.size()/2]+vp[(vp.size()/2)-1])/2.0;
+    }
+    return (float)vp[vp.size()/2];
+      //Code here
+}
+
+//another appaoch
+int val=0;
+int fetchTheElement(Node *root,int num,int &i)
+{
+     if(!root)
+     return 0;
+     
+     fetchTheElement(root->left,num,i);
+     
+     i++;
+     if(i == num)
+     val = root->data;
+     
+     fetchTheElement(root->right,num,i);
+}
+
+int count(Node *root)
+{
+    if(!root)    
+    return 0;
+    
+    return 1 + count(root->left) + count(root->right);
+}
+
+float findMedian(struct Node *root)
+{
+      //Code here
+      int i = 0;
+      int N = count(root);
+      
+      if(N%2 == 0)
+      {
+          fetchTheElement(root,N/2,i);
+          int a = val;
+          i=0;
+          fetchTheElement(root,N/2 + 1,i);
+          int b = val;
+          
+          return (a + b)/2.0;
+      }
+      else
+      {
+          fetchTheElement(root,(N + 1)/2,i);
+          int a = val;
+          
+          
+          return a;
+      }
+}
+
+//Normal BST to balanced BST
+//find the inorder array and then take mid element to make a balanced tree
+https://practice.geeksforgeeks.org/problems/normal-bst-to-balanced-bst/1
+vector<int> vp;
+void inorder(Node* root)
+{
+    if(root==NULL)
+        return;
+    inorder(root->left);
+    vp.push_back(root->data);
+    inorder(root->right);
+    return;
+}
+Node* balanced(int s,int e,vector<int> arr)
+{
+    if(s>e)
+        return NULL;
+    int mid = s+(e-s)/2;
+    Node* root = new Node(arr[mid]);
+    root->left=balanced(s,mid-1,arr);
+    root->right=balanced(mid+1,e,arr);
+    return root;
+}
+Node* buildBalancedTree(Node* root)
+{
+    vp.clear();
+    inorder(root);
+    return balanced(0,vp.size()-1,vp);
+	// Code here
+}
+
+//leaf under budget
+https://practice.geeksforgeeks.org/problems/leaf-under-budget/1#
+void solve(Node* root,int cnt,vector<int> &vp)
+{
+    if(root==NULL)
+        return;
+    if(root->left==NULL&&root->right==NULL)
+    {
+        vp.push_back(cnt);
+        return;
+    }
+    solve(root->left,cnt+1,vp);
+    solve(root->right,cnt+1,vp);
+}
+    int getCount(Node *root, int k)
+    {
+        vector<int> vp;
+        solve(root,1,vp);
+        sort(vp.begin(),vp.end());
+        int ans = 0;int sum=0;
+        for(auto &value:vp)
+        {
+            if(sum+value<=k)
+            {
+                ans++;
+                sum+=value;
+            }
+        }
+        return ans;
+        //code here
+    }

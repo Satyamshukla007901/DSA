@@ -281,3 +281,27 @@ int maximalRectangle(vector<vector<char>> &matrix)
     }
     return ans;
 }
+
+
+//Trapping Rainwater
+//https://practice.geeksforgeeks.org/problems/trapping-rain-water-1587115621/1#
+long long trappingWater(int arr[], int n)
+{
+    vector<int> leftmax(n);
+    leftmax[0]=arr[0];
+    for(int i=1;i<n;i++)
+        leftmax[i]=max(arr[i],leftmax[i-1]);
+    vector<int> rightmax(n);
+    rightmax[n-1]=arr[n-1];
+    for(int i=n-2;i>=0;i--)
+    {
+        rightmax[i]=max(arr[i],rightmax[i+1]);
+    }
+    long long ans = 0;
+    for(int i=0;i<n;i++)
+    {
+        ans+=abs(arr[i]-min(leftmax[i],rightmax[i]));
+    }
+    return ans;
+    // code here
+}
