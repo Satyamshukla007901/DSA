@@ -765,3 +765,206 @@ void solve(Node* root,int cnt,vector<int> &vp)
         return ans;
         //code here
     }
+
+//https://practice.geeksforgeeks.org/problems/sum-of-left-leaf-nodes/1#
+void solve(Node* root,int &sum)
+{
+    if(root==NULL)
+        return;
+    if(root->left&&root->left->left==NULL&&root->left->right==NULL)
+    {
+        sum+=root->left->data;
+    }
+    solve(root->left,sum);
+    solve(root->right,sum);
+    
+    
+}
+int leftLeavesSum(Node *root)
+{
+    if(root==NULL)
+        return 0;
+    
+    int sum = 0;
+    solve(root,sum);
+    return sum;
+    // Code here
+}
+
+//Nodes at odd level
+//https://practice.geeksforgeeks.org/problems/nodes-at-odd-levels/1
+vector<vector<int>> levelOrder(Node *root)
+{
+    vector<vector<int>> vp;
+    if (root == NULL)
+        return vp;
+
+    queue<Node *> q;
+    q.push(root);
+    while (!q.empty())
+    {
+        vector<int> t;
+        int sz = q.size();
+        for (int i = 0; i < sz; i++)
+        {
+            Node *temp = q.front();
+            // cout<<temp->val<<" ";
+            q.pop();
+            if (temp->left != NULL)
+            {
+                q.push(temp->left);
+            }
+            if (temp->right != NULL)
+            {
+                q.push(temp->right);
+            }
+            t.push_back(temp->data);
+        }
+        // cout << endl;
+        vp.push_back(t);
+    }
+    return vp;
+}
+    vector<Node *> nodesAtOddLevels(Node *root)
+    {
+        vector<Node*> vp;
+        if(root==NULL)
+            return vp;
+        vector<vector<int>> ok = levelOrder(root);
+        for(int i=0;i<ok.size();i++)
+        {
+            if(i%2==0)
+            {
+                for(auto &value:ok[i])
+                {
+                    vp.push_back(new Node(value));
+                }
+            }
+        }
+        return vp;
+        //code here
+    }
+
+//Deletion in Binary tree
+//https://practice.geeksforgeeks.org/problems/deletion-in-a-binary-tree/1
+//vector<vector<int>> levelOrder(Node *root)
+{
+    vector<vector<int>> vp;
+    if (root == NULL)
+        return vp;
+
+    queue<Node *> q;
+    q.push(root);
+    while (!q.empty())
+    {
+        vector<int> t;
+        int sz = q.size();
+        for (int i = 0; i < sz; i++)
+        {
+            Node *temp = q.front();
+            // cout<<temp->val<<" ";
+            q.pop();
+            if (temp->left != NULL)
+            {
+                q.push(temp->left);
+            }
+            if (temp->right != NULL)
+            {
+                q.push(temp->right);
+            }
+            t.push_back(temp->data);
+        }
+        // cout << endl;
+        vp.push_back(t);
+    }
+    return vp;
+}
+Node* deleteNode(Node* root,int repl)
+{
+    if(root==NULL)
+        return NULL;
+    if(root->data==repl)
+    {
+        return NULL;
+    }
+    root->left = deleteNode(root->left,repl);
+    root->right = deleteNode(root->right,repl);
+    return root;
+}
+void solve(Node* root,int key,int repl)
+{
+    if(root==NULL)
+        return;
+    if(root->data==key)
+    {
+        root->data=repl;
+        return;
+    }
+    solve(root->left,key,repl);
+    solve(root->right,key,repl);
+}
+struct Node* deletionBT(struct Node* root, int key)
+{
+    if(root==NULL)
+        return NULL;
+    vector<vector<int>> ok =  levelOrder(root);
+    int repl = ok[ok.size()-1][ok[ok.size()-1].size()-1];
+    root = deleteNode(root,repl);
+    solve(root,key,repl);
+    return root;
+    // code here
+}
+
+/https://practice.geeksforgeeks.org/problems/closest-neighbor-in-bst/1
+Closest Neighbor in BST
+void  solve(Node* root,int &ans,int N)
+{
+    if(root==NULL)
+        return;
+    if(root->key<=N)
+    {
+        ans=max(ans,root->key);
+    }
+    solve(root->left,ans,N);
+    solve(root->right,ans,N);
+}
+int findMaxForN(Node* root, int N)
+{
+    if(root==NULL)
+    {
+        return -1;
+    }
+    int ans = INT_MIN;
+    solve(root,ans,N);
+    return ans;
+}
+
+//Two sum in BT
+//https://practice.geeksforgeeks.org/problems/brothers-from-different-root/1
+void solve(Node* root,unordered_map<int,int> &mp)
+{
+    if(root==NULL)
+        return;
+    mp[root->data]++;
+    solve(root->left,mp);
+    solve(root->right,mp);
+}
+void solve2(Node* root,unordered_map<int,int> &mp,int &ans,int x)
+{
+    if(root==NULL)
+        return;
+    if(mp.find(x-root->data)!=mp.end())
+        ans+=mp[x-root->data];
+    solve2(root->left,mp,ans,x);
+    solve2(root->right,mp,ans,x);
+}
+    int countPairs(Node* root1, Node* root2, int x)
+    {
+        if(root1==NULL||root2==NULL)
+            return 0;
+        int ans = 0;
+        unordered_map<int,int> mp;
+        solve(root2,mp);
+        solve2(root1,mp,ans,x);
+        return ans;
+    }
