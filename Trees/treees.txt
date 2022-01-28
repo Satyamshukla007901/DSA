@@ -968,3 +968,85 @@ void solve2(Node* root,unordered_map<int,int> &mp,int &ans,int x)
         solve2(root1,mp,ans,x);
         return ans;
     }
+
+//Longest Path sum
+https://practice.geeksforgeeks.org/problems/sum-of-the-longest-bloodline-of-a-tree/1
+    int height(Node* root)
+    {
+        if(root==NULL)
+            return 0;
+        return 1+max(height(root->left),height(root->right));
+    }
+    void solve(Node* root,int h,int cnt,int sum,int &ans)
+    {
+        if(root==NULL)
+            return;
+        if(cnt==h)
+        {
+            sum+=root->data;
+            ans=max(ans,sum);
+            return;
+        }
+        
+        
+        solve(root->left,h,cnt+1,sum+root->data,ans);
+        solve(root->right,h,cnt+1,sum+root->data,ans);
+    }
+    int sumOfLongRootToLeafPath(Node *root)
+    {
+        if(root==NULL)
+            return 0;
+        int ans = 0;
+        int h = height(root);
+        
+        solve(root,h,1,0,ans);
+        return ans;
+        //code here
+    }
+
+    //https://practice.geeksforgeeks.org/problems/exchange-the-leaf-nodes/1#
+        void leafNodes(Node* root,vector<int> &vp)
+    {
+        if(root==NULL)
+            return;
+        
+        if(root->left==NULL&&root->right==NULL)
+        {
+            vp.push_back(root->data);
+            return;
+        }
+        leafNodes(root->left,vp);
+        leafNodes(root->right,vp);
+    }
+    void solve(Node* root,int &idx,vector<int> leaf)
+    {
+        if(root==NULL)
+            return;
+        if(root->left==NULL&&root->right==NULL)
+        {
+            if(idx<leaf.size())
+                root->data=leaf[idx];
+            idx++;
+        }
+        solve(root->left,idx,leaf);
+        solve(root->right,idx,leaf);
+    }
+    void pairwiseSwap(Node *root)
+    {
+        if(root==NULL)
+            return;
+        vector<int> leaf;
+        leafNodes(root,leaf);
+        for(int i=0;i<leaf.size();i+=2)
+        {
+            // cout<<leaf[i]<<" ";
+            if(i+1<leaf.size())
+            {
+                swap(leaf[i],leaf[i+1]);
+            }
+        }
+        // cout<<endl;
+        int idx=0;
+        solve(root,idx,leaf);
+        // code here
+    }
