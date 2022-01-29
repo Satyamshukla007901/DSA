@@ -1,0 +1,22 @@
+//https://practice.geeksforgeeks.org/problems/sum-of-k-smallest-elements-in-bst3029/1#
+//Function to count number of nodes in BST that lie in the given range.
+void solve(Node* root,int &cnt,int l,int h)
+{
+    if(root==NULL)
+        return;
+    if(root->data>=l&&root->data<=h)
+    {
+        cnt+=1;
+    }
+    solve(root->left,cnt,l,h);
+    solve(root->right,cnt,l,h);
+}
+int getCount(Node *root, int l, int h)
+{
+    if(root==NULL)
+        return 0;
+    int cnt = 0;
+    solve(root,cnt,l,h);
+    return cnt;
+  // your code goes here   
+}

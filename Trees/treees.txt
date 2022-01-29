@@ -1109,3 +1109,68 @@ vector<int> largestValues(Node* root)
         return ans;
         //code here
     }
+
+//Array to BST
+https://practice.geeksforgeeks.org/problems/array-to-bst4443/1#
+Node* balanced(int s,int e,vector<int> arr)
+{
+    if(s>e)
+        return NULL;
+    int mid = s+(e-s)/2;
+    Node* root = new Node(arr[mid]);
+    root->left=balanced(s,mid-1,arr);
+    root->right=balanced(mid+1,e,arr);
+    return root;
+}
+vector<int> vp;
+void preorder(Node *root)
+{
+    if (!root)
+        return;
+    // cout << root->data << " ";
+    vp.push_back(root->data);
+    preorder(root->left);
+    preorder(root->right);
+}
+    vector<int> sortedArrayToBST(vector<int>& nums) {
+        
+        Node* root = balanced(0,nums.size()-1,nums);
+        preorder(root);
+        return vp;
+        // Code here
+    }
+
+
+//https://practice.geeksforgeeks.org/problems/sum-of-k-smallest-elements-in-bst3029/1#
+vector<int> vp;
+void inorder(struct Node *root)
+{
+    if (!root)
+        return;
+
+    inorder(root->left);
+    // cout << root->data << " ";
+    vp.push_back(root->data);
+    inorder(root->right);
+}
+int sum(Node* root, int k) 
+{ 
+    if(root==NULL)
+        return -1;
+    vp.clear();
+    inorder(root);
+    if(k>*max_element(vp.begin(),vp.end()))
+        return -1;
+    // for(auto &value:vp)
+    //     cout<<value<<" ";
+    // cout<<endl;
+    int sum = 0;
+    for(int i=0;i<=k-1;i++)
+    {
+        sum+=vp[i];
+    }
+    return sum;
+    // Your code here
+    
+    
+} 
