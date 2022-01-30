@@ -1174,3 +1174,95 @@ int sum(Node* root, int k)
     
     
 } 
+//Check for BST
+https://practice.geeksforgeeks.org/problems/check-for-bst/1#
+    bool isBST(Node* root) 
+    {
+        if(root==NULL)
+            return true;
+        inOrder(root);
+        for(int i=0;i<vp.size()-1;i++)
+        {
+            if(vp[i]>=vp[i+1])
+            {
+                return false;
+            }
+        }
+        return true;
+        // Your code here
+    }
+//we can avoid the use of extra space
+//by keeping the track of previous node
+bool isBSTUtil(struct Node* root, Node *&prev) 
+{ 
+    // traverse the tree in inorder fashion and  
+    // keep track of prev node 
+    if (root) 
+    { 
+        if (!isBSTUtil(root->left, prev)) 
+          return false; 
+   
+        // Allows only distinct valued nodes  
+        if (prev != NULL && root->data <= prev->data) 
+          return false; 
+   
+        prev = root; 
+   
+        return isBSTUtil(root->right, prev); 
+    } 
+   
+    return true; 
+} 
+  
+bool isBST(Node *root) 
+{ 
+   Node *prev = NULL; 
+   return isBSTUtil(root, prev); 
+} 
+
+//Common Nodes in two BSTs
+    void solve(Node* root,unordered_set<int> &s,vector<int> &ok)
+    {
+        if(root==NULL)
+            return;
+        if(s.find(root->data)!=s.end())
+        {
+            ok.push_back(root->data);
+        }
+        s.insert(root->data);
+        solve(root->left,s,ok);
+        solve(root->right,s,ok);
+    }
+    vector <int> findCommon(Node *root1, Node *root2)
+    {
+        unordered_set<int> s;vector<int> ans;
+        solve(root1,s,ans);
+        solve(root2,s,ans);
+        sort(ans.begin(),ans.end());
+        return ans;
+     //Your code here
+    }
+
+//inorder suuccesor in BST
+    void solve(Node* root,Node* x,int &ans)
+    {
+        if(root==NULL)
+            return;
+        if(root->data>x->data)
+        {
+            ans=min(ans,root->data);
+        }
+        solve(root->left,x,ans);
+        solve(root->right,x,ans);
+    }
+    Node * inOrderSuccessor(Node *root, Node *x)
+    {
+        if(root==NULL)
+            return NULL;
+        int ans = INT_MAX;
+        solve(root,x,ans);
+        if(ans==INT_MAX)
+            return NULL;
+        return new Node(ans);
+        //Your code here
+    }
