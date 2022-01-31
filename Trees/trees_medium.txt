@@ -70,3 +70,145 @@ Node *buildTree(int in[], int post[], int n) {
     return solve(in,post,0,n-1,i,mp);
     // Your code here
 }
+
+//Sum tree
+https://practice.geeksforgeeks.org/problems/sum-tree/1
+    int sum(Node* root)
+    {
+        if(root==NULL)
+            return 0;
+        return root->data+sum(root->left)+sum(root->right);
+    }
+    void solve(Node* root,bool &res)
+    {
+        if(root==NULL)
+            return;
+        if(root->left==NULL&&root->right==NULL)
+            return;
+        int lt = sum(root->left);
+        int lr = sum(root->right);
+        if(lt+lr!=root->data)
+        {
+            res=false;return;
+        }
+        solve(root->left,res);
+        solve(root->right,res);
+    }
+    bool isSumTree(Node* root)
+    {
+        if(root==NULL)
+            return true;
+        bool res = true;
+        solve(root,res);
+        return res;
+         // Your code here
+    }
+
+
+//https://practice.geeksforgeeks.org/problems/connect-nodes-at-same-level/1
+vector<vector<Node*>> levelOrder(Node *root)
+{
+    vector<vector<Node*>> vp;
+    if (root == NULL)
+        return vp;
+
+    queue<Node *> q;
+    q.push(root);
+    while (!q.empty())
+    {
+        vector<Node*> t;
+        int sz = q.size();
+        for (int i = 0; i < sz; i++)
+        {
+            Node *temp = q.front();
+            // cout<<temp->val<<" ";
+            q.pop();
+            if (temp->left != NULL)
+            {
+                q.push(temp->left);
+            }
+            if (temp->right != NULL)
+            {
+                q.push(temp->right);
+            }
+            t.push_back(temp);
+        }
+       
+        vp.push_back(t);
+    }
+    return vp;
+}
+    void connect(Node *root)
+    {
+        vector<vector<Node*>> vp = levelOrder(root);
+        for(auto &value:vp)
+        {
+            for(int i=0;i<value.size()-1;i++)
+            {
+                value[i]->nextRight=value[i+1];
+            }
+            value[value.size()-1]->nextRight=NULL;
+        }
+        
+       // Your Code Here
+    } 
+
+//https://practice.geeksforgeeks.org/problems/lowest-common-ancestor-in-a-binary-tree/1#
+    void solve(Node* root,bool &flag,vector<int> &vp,int x)
+    {
+        if(root==NULL)
+            return;
+
+        if(root->data==x)
+        {
+            flag = true;
+        }
+        
+        if(!flag)
+        {
+            solve(root->left,flag,vp,x);
+        }
+        if(!flag)
+        {
+            solve(root->right,flag,vp,x);
+        }
+        if(flag)
+        {
+            vp.push_back(root->data);
+        }
+        
+    }
+    Node* lca(Node* root ,int n1 ,int n2 )
+    {
+        if(root==NULL)
+            return NULL;
+        vector<int> p1;
+        bool flag = false;
+        solve(root,flag,p1,n1);
+        flag = false;
+        vector<int> p2;
+        solve(root,flag,p2,n2);
+        if(p1.size()==0&&p2.size()==0)
+        {
+            return new Node(-1);
+        }
+        // for(auto &value:p1)
+        //     cout<<value<<" ";
+        // cout<<endl;
+        // for(auto &value:p2)
+        //     cout<<value<<" ";
+        // cout<<endl;
+        int ans = -1;
+        unordered_set<int> s;
+        for(auto &value:p1)
+            s.insert(value);
+        for(auto &value:p2)
+        {
+            if(s.find(value)!=s.end())
+            {
+                ans=value;break;
+            }
+        }
+        return new Node(ans);
+       //Your code here 
+    }
