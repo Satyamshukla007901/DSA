@@ -20,3 +20,53 @@ int getCount(Node *root, int l, int h)
     return cnt;
   // your code goes here   
 }
+
+
+//https://practice.geeksforgeeks.org/problems/add-all-greater-values-to-every-node-in-a-bst/1
+void solve(Node* root,int &sum)
+{
+    if(root==NULL)
+        return;
+    solve(root->right,sum);
+    sum+=root->data;
+    root->data=sum;
+    solve(root->left,sum);
+}
+Node* modify(Node *root)
+{
+    if(root==NULL)
+        return NULL;
+    int sum = 0;
+    solve(root,sum);
+    return root;
+    // Your code here
+}
+
+//https://practice.geeksforgeeks.org/problems/tree-from-postorder-and-inorder/1
+Node* solve(int in[],int post[],int s,int e,int &i,unordered_map<int,int> &mp)
+{
+    if(s>e)
+        return NULL;
+        
+    int curr = post[i];
+    i--;
+    Node* node = new Node(curr);
+    if(s==e)
+    {
+        return node;
+    }
+    int idx = mp[curr];
+    node->right = solve(in,post,idx+1,e,i,mp);
+    node->left = solve(in,post,s,idx-1,i,mp);
+    return node;
+}
+Node *buildTree(int in[], int post[], int n) {
+    unordered_map<int,int> mp;
+    for(int i=0;i<n;i++)
+    {
+        mp[in[i]]=i;
+    }
+    int i=n-1;
+    return solve(in,post,0,n-1,i,mp);
+    // Your code here
+}
