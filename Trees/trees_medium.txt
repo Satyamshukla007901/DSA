@@ -317,3 +317,123 @@ int maxDiff(Node* root)
         return solve(A,idx);
        //Your code here
     }
+
+//Binary trees from linked list
+void convert(Node *head, TreeNode *&root) {
+    if(head==NULL)
+    {
+        root=NULL;
+        return;
+    }
+    queue<TreeNode*> q;
+    root = new TreeNode(head->data);
+    q.push(root);
+    head=head->next;
+    while(head)
+    {
+        TreeNode* curr = q.front();
+        q.pop();
+        TreeNode* l = new TreeNode(head->data);
+        q.push(l);
+        head=head->next;
+        curr->left=l;
+        if(head)
+        {
+            TreeNode* r = new TreeNode(head->data);
+            head=head->next;
+            curr->right = r;
+            q.push(r);
+        }
+        else
+        {
+            curr->right=NULL;
+        }
+        
+    }
+    return;
+    // Your code here
+}
+
+//isSUbtree
+https://practice.geeksforgeeks.org/problems/check-if-subtree/1#
+     bool isIdentical(Node *r1, Node *r2)
+    {
+        if(r1==NULL&&r2==NULL)
+            return true;
+        if(r1==NULL&&r2!=NULL)
+            return false;
+        if(r1!=NULL&&r2==NULL)
+            return false;
+        if(r1->data!=r2->data)
+            return false;
+        return isIdentical(r1->left,r2->left)&&isIdentical(r1->right,r2->right);
+        //Your Code here
+    }
+    bool isSubTree(Node* T, Node* S) 
+    {
+        if(T==NULL&&S==NULL)
+            return true;
+        else if(T==NULL&&S!=NULL)
+            return false;
+        else if(T!=NULL&&S==NULL)
+            return true;
+        if(isIdentical(T,S))return true;
+        return isSubTree(T->left,S)||isSubTree(T->right,S);
+        
+        // Your code here
+        
+    }
+
+//https://practice.geeksforgeeks.org/problems/extreme-nodes-in-alternate-order/1#
+vector<vector<int>> levelOrder(Node *root)
+{
+    vector<vector<int>> vp;
+    if (root == NULL)
+        return vp;
+
+    queue<Node *> q;
+    q.push(root);
+    while (!q.empty())
+    {
+        vector<int> t;
+        int sz = q.size();
+        for (int i = 0; i < sz; i++)
+        {
+            Node *temp = q.front();
+            // cout<<temp->val<<" ";
+            q.pop();
+            if (temp->left != NULL)
+            {
+                q.push(temp->left);
+            }
+            if (temp->right != NULL)
+            {
+                q.push(temp->right);
+            }
+            t.push_back(temp->data);
+        }
+        // cout << endl;
+        vp.push_back(t);
+    }
+    return vp;
+}
+    vector<int> ExtremeNodes(Node* root)
+    {
+        vector<int> ans;
+        if(root==NULL)
+            return ans;
+        vector<vector<int>> ok = levelOrder(root);
+        for(int i=0;i<ok.size();i++)
+        {
+            if(i&1)
+            {
+                ans.push_back(ok[i][0]);
+            }
+            else
+            {
+                ans.push_back(ok[i][ok[i].size()-1]);
+            }
+        }
+        return ans;
+        // Your code here
+    }
