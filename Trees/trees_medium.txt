@@ -267,3 +267,53 @@ int maxDiff(Node* root)
         return ans;
         //Your code here
     }
+
+//Serialise and deserialise a tree
+    void construct(Node* root,vector<int> &ok)
+    {
+        if(root==NULL)  
+        {
+            ok.push_back(-1);
+            return;
+        }
+        ok.push_back(root->data);
+        construct(root->left,ok);
+        construct(root->right,ok);
+    }
+    vector<int> serialize(Node *root) 
+    {
+        vector<int> ans;
+        if(root==NULL)
+            return ans;
+        construct(root,ans);
+        // for(auto &value:ans)
+        //     cout<<value<<" ok";
+        // cout<<endl;
+        return ans;
+        //Your code here
+    }
+    
+    //Function to deserialize a list and construct the tree.
+    Node* solve(vector<int> &A,int &idx)
+    {
+        if(idx>=A.size()||A[idx]==-1)
+        {
+            idx++;
+            return NULL;
+        }
+        Node* root = new Node(A[idx++]);
+      
+        root->left=solve(A,idx);
+       
+        root->right=solve(A,idx);
+        return root;
+    }
+    Node * deSerialize(vector<int> &A)
+    {
+        if(A[0]==-1)
+            return NULL;
+        int idx = 0;
+
+        return solve(A,idx);
+       //Your code here
+    }
