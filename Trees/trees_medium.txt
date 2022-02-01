@@ -212,3 +212,58 @@ vector<vector<Node*>> levelOrder(Node *root)
         return new Node(ans);
        //Your code here 
     }
+
+//https://practice.geeksforgeeks.org/problems/maximum-difference-between-node-and-its-ancestor/1#
+int solve(Node* root,int &ans)
+{
+    if(root==NULL)
+        return INT_MAX;
+    
+    if(root->left==NULL&&root->right==NULL)
+        return root->data;
+    int l = solve(root->left,ans);
+    int r = solve(root->right,ans);
+    int ok = min(l,r);
+    ans=max(ans,root->data-ok);
+    return min(root->data,ok);
+}
+int maxDiff(Node* root)
+{
+    int ans = INT_MIN;
+    solve(root,ans);
+    return ans;
+    // Your code here 
+}
+
+//https://practice.geeksforgeeks.org/problems/print-a-binary-tree-in-vertical-order/1#
+    void solve(Node* root,int cnt,int l,map<int,map<int,vector<int>>> &mp)
+    {
+        if(root==NULL)
+            return;
+        mp[cnt][l].push_back(root->data);
+        solve(root->left,cnt-1,l+1,mp);
+        solve(root->right,cnt+1,l+1,mp);
+        
+    }
+    vector<int> verticalOrder(Node *root)
+    {
+        vector<int> ans;
+        if(root==NULL)
+            return ans;
+        map<int,map<int,vector<int>>> mp;
+        solve(root,0,0,mp);
+        
+        for(auto &value:mp)
+        {
+            for(auto &val:value.second)
+            {
+                for(auto &val2:val.second)
+                {
+                    ans.push_back(val2);
+                }
+            }
+            
+        }
+        return ans;
+        //Your code here
+    }
