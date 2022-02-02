@@ -437,3 +437,31 @@ vector<vector<int>> levelOrder(Node *root)
         return ans;
         // Your code here
     }
+
+//Number of Root to leaf paths
+void solve(Node* root,int cnt,map<int,int> &mp)
+{
+    if(root==NULL)
+        return;
+    if(root->left==NULL&&root->right==NULL)
+    {
+        mp[cnt]++;
+        return;
+    }
+    solve(root->left,cnt+1,mp);
+    solve(root->right,cnt+1,mp);
+}
+void pathCounts(Node *root)
+{
+    if(root==NULL)
+        return;
+    map<int,int> mp;
+    int cnt = 1;
+    solve(root,cnt,mp);
+    for(auto &value:mp)
+    {
+        cout<<value.first<<" "<<value.second<<" $";
+    }
+    
+    //Your code here
+}
