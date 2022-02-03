@@ -11,6 +11,12 @@
         "deque": "cpp",
         "list": "cpp",
         "vector": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "array": "cpp",
+        "forward_list": "cpp",
+        "xhash": "cpp",
+        "xlocinfo": "cpp",
+        "xtree": "cpp",
+        "xutility": "cpp"
     }
 }
