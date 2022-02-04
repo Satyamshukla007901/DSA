@@ -633,3 +633,107 @@ void printCorner(Node *root)
 // Your code goes here
 
 }
+
+//https://practice.geeksforgeeks.org/problems/construct-tree-1/1
+    Node* solve(int in[],int s,int e,int pre[],int &idx)
+    {
+        if(s>e)
+            return NULL;
+        
+        Node* node = new Node(pre[idx++]);
+        if(s==e)
+            return node;
+        int i;
+        for(i=s;i<=e;i++)//can be done using unordered_map
+        {
+            if(node->data==in[i])
+            {
+                break;
+            }
+        }
+        node->left = solve(in,s,i-1,pre,idx);
+        node->right = solve(in,i+1,e,pre,idx);
+        return node;
+    }
+    Node* buildTree(int in[],int pre[], int n)
+    {
+        int idx = 0;
+        return solve(in,0,n-1,pre,idx);
+        // Code here
+    }
+
+//https://practice.geeksforgeeks.org/problems/mirror-of-a-given-node/1
+    void solve(Node* r1,Node* r2,int k,int &ans)
+    {
+        if(r1==NULL||r2==NULL)
+            return;
+        if(r1->data==k)
+        {
+            if(r2)
+            {
+                ans=r2->data;
+            }
+            return;
+        }
+        else if(r2->data==k)
+        {
+            if(r1)
+            {
+                ans=r1->data;
+            }
+            return;
+        }
+        solve(r1->left,r2->right,k,ans);
+        solve(r1->right,r2->left,k,ans);
+    }
+    int findMirror(Node *root, int target)
+    {
+        int ans = -1;
+        solve(root,root,target,ans);
+        return ans;
+        //code here
+    }
+
+//https://practice.geeksforgeeks.org/problems/leaves-to-dll/1#
+void solve(Node* root,Node* &head,Node* &temp)
+{
+    if(root==NULL)
+        return;
+    if(root->left==NULL&&root->right==NULL)
+    {
+        if(head==NULL)
+        {
+            head = new Node(root->data);
+            temp=head;
+        }
+        else
+        {
+            
+            temp->right = new Node(root->data);
+            temp->right->left = temp;
+            temp=temp->right;
+        }
+        return;
+    }
+    solve(root->left,head,temp);
+    solve(root->right,head,temp);
+}
+void destroy(Node* &root)
+{
+    if(root==NULL)
+        return;
+    if(root->left==NULL&&root->right==NULL)
+    {
+        root=NULL;
+        return;
+    }
+    destroy(root->left);
+    destroy(root->right);
+}
+Node * convertToDLL(Node *root){
+    Node* head = NULL;Node* temp = head;
+    solve(root,head,temp);
+    destroy(root);
+    return head;
+    // add code here.
+}
