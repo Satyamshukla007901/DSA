@@ -579,3 +579,57 @@ https://practice.geeksforgeeks.org/problems/find-k-th-smallest-element-in-bst/1
     return ans;
         // add code here.
     }
+
+//https://practice.geeksforgeeks.org/problems/leftmost-and-rightmost-nodes-of-binary-tree/1
+vector<vector<int>> levelOrder(Node *root)
+{
+    vector<vector<int>> vp;
+    if (root == NULL)
+        return vp;
+
+    queue<Node *> q;
+    q.push(root);
+    while (!q.empty())
+    {
+        vector<int> t;
+        int sz = q.size();
+        for (int i = 0; i < sz; i++)
+        {
+            Node *temp = q.front();
+            // cout<<temp->val<<" ";
+            q.pop();
+            if (temp->left != NULL)
+            {
+                q.push(temp->left);
+            }
+            if (temp->right != NULL)
+            {
+                q.push(temp->right);
+            }
+            t.push_back(temp->data);
+        }
+        // cout << endl;
+        vp.push_back(t);
+    }
+    return vp;
+}
+void printCorner(Node *root)
+{
+    if(root==NULL)
+        return;
+    vector<vector<int>> vp = levelOrder(root);
+    for(auto &value:vp)
+    {
+        if(value.size()==1)
+        {
+            cout<<value[0]<<" ";
+        }
+        else
+        {
+            cout<<value[0]<<" "<<value[value.size()-1]<<" ";
+        }
+    }
+    
+// Your code goes here
+
+}
