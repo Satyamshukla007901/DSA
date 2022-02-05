@@ -737,3 +737,71 @@ Node * convertToDLL(Node *root){
     return head;
     // add code here.
 }
+
+//https://practice.geeksforgeeks.org/problems/node-at-distance/1#
+int height(Node* root)
+{
+    if(root==NULL)
+        return 0;
+    return 1+max(height(root->left),height(root->right));
+}
+bool solve(Node* root,int k,multiset<int> &s)
+{
+    if(root==NULL)
+        return false;
+    if(root->left==NULL&&root->right==NULL&&k==0)
+    {
+        return true;
+    }
+    return solve(root->left,k-1,s) or solve(root->right,k-1,s);
+}
+void inorder(Node* root,multiset<int> &s,int k)
+{
+    if(root==NULL)
+        return;
+    inorder(root->left,s,k);
+    if(solve(root,k,s))
+        s.insert(root->data);
+    inorder(root->right,s,k);
+}
+int printKDistantfromLeaf(Node* root, int k)
+{
+    if(root==NULL||height(root)==0)
+        return 0;
+    
+    multiset<int> s;
+    inorder(root,s,k);
+    return s.size();
+	//Add your code here. 
+}
+
+//https://practice.geeksforgeeks.org/problems/construct-tree-from-preorder-traversal/1
+struct Node *constructTree(int n, int pre[], char preLN[])
+{
+    if(n==0)
+        return NULL;
+    Node* root = new Node(pre[0]);
+    stack<Node*> st;
+    st.push(root);
+    for(int i=1;i<n;i++)
+    {
+        Node* ok = new Node(pre[i]);
+        if(st.top()->left==NULL)
+        {
+            st.top()->left = ok;
+        }
+        else if(st.top()->right==NULL)
+        {
+            st.top()->right = ok;
+        }
+        else
+        {
+            st.pop();
+            i--;
+        }
+        if(preLN[i]=='N')
+            st.push(ok);
+    }
+    return root;
+    // Code here
+}
