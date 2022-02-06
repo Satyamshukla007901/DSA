@@ -805,3 +805,47 @@ struct Node *constructTree(int n, int pre[], char preLN[])
     return root;
     // Code here
 }
+//https://practice.geeksforgeeks.org/problems/count-number-of-subtrees-having-given-sum/1#
+int solve(Node* root,int X,int &cnt)
+{
+    if(root==NULL)
+        return 0;
+    int lsum = solve(root->left,X,cnt);
+    int rsum = solve(root->right,X,cnt);
+    if(lsum+rsum+root->data==X)
+        cnt++;
+    return lsum+rsum+root->data;
+}
+int countSubtreesWithSumX(Node* root, int X)
+{
+    if(root==NULL)
+        return 0;
+    int cnt = 0;
+    solve(root,X,cnt);
+    return cnt;
+	// Code here
+}
+
+//https://practice.geeksforgeeks.org/problems/print-binary-tree-levels-in-sorted-order3241/1
+    vector <vector <int>> binTreeSortedLevels (int arr[], int n)
+    {
+        vector<vector<int>> ans;
+        int nodes = 1;
+        for(int i=0;i<n;)
+        {
+            vector<int> ok ;
+            for(int j=i;j<i+nodes&&j<n;j++)
+            {
+                ok.push_back(arr[j]);
+            }
+            ans.push_back(ok);
+            i+=nodes;
+            nodes=nodes*2;
+        }
+        for(auto &value:ans)
+            sort(value.begin(),value.end());
+        return ans;
+        // Your code here
+    }
+
+//

@@ -1,0 +1,3 @@
+//if we want to divide an even lengthed array into two odd lengthed arrays suck that abs diff between the median of two should be minimized 
+so u must sort the whole array and then divide the two arrays such that one contain even indexed element and one contain odd indexed element
+and then print abs diff of median of two arrays
