@@ -848,4 +848,101 @@ int countSubtreesWithSumX(Node* root, int X)
         // Your code here
     }
 
-//
+//https://practice.geeksforgeeks.org/problems/cousins-of-a-given-node/1
+vector<vector<Node*>> levelOrder(Node *root)
+{
+    vector<vector<Node*>> vp;
+    if (root == NULL)
+        return vp;
+
+    queue<Node *> q;
+    q.push(root);
+    while (!q.empty())
+    {
+        vector<Node*> t;
+        int sz = q.size();
+        for (int i = 0; i < sz; i++)
+        {
+            Node *temp = q.front();
+            // cout<<temp->val<<" ";
+            q.pop();
+            if (temp->left != NULL)
+            {
+                q.push(temp->left);
+            }
+            if (temp->right != NULL)
+            {
+                q.push(temp->right);
+            }
+            t.push_back(temp);
+        }
+        // cout << endl;
+        vp.push_back(t);
+    }
+    return vp;
+}
+    vector<int> printCousins(Node* root, Node* node_to_find)
+    {
+        vector<int> vp;
+        if(root==NULL)
+            return vp;
+        int l = 0;
+        vector<vector<Node*>> ok = levelOrder(root);
+        for(int i=0;i<ok.size();i++)
+        {
+            for(auto &value:ok[i])
+            {
+                if(value->data==node_to_find->data)
+                {
+                    l=i;
+                    break;
+                }
+            }
+        }
+        if(l-1>=0)
+        {
+            for(auto &value:ok[l-1])
+            {
+                if((value->left&&value->left->data==node_to_find->data)||(value->right&&value->right->data==node_to_find->data))
+                {
+                    
+                }
+                else
+                {
+                    if(value->left)
+                        vp.push_back(value->left->data);
+                    if(value->right)
+                        vp.push_back(value->right->data);
+                }
+            }
+            if(vp.size()==0)
+                return {-1};
+            return vp;
+        }
+        else
+        {
+            return {-1};
+        }
+        //code here
+    }
+
+//https://practice.geeksforgeeks.org/problems/bst-to-greater-sum-tree/1
+    int solve(Node* &root,int &sum)
+    {
+        if(root==NULL)
+            return 0;
+        int r = solve(root->right,sum);
+        int t = root->data;
+        root->data = sum;
+        sum=sum+t;
+        int l = solve(root->left,sum);
+        
+        return sum;
+    }
+    void transformTree(struct Node *root)
+    {
+        int sum = 0;
+        solve(root,sum);
+        
+        //code here
+    }
