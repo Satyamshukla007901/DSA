@@ -42,3 +42,24 @@ vector<vector<int>> levelOrder(TreeNode *root)
         }
         return vp;
     }
+
+//recursive my approach
+    void solve(TreeNode* root,vector<int> &vp,map<int,int> &mp,int cnt)
+    {
+        if(root==NULL)
+                return;
+        mp[cnt]=root->val;
+        solve(root->left,vp,mp,cnt+1);
+        solve(root->right,vp,mp,cnt+1);
+        
+    }
+    vector<int> rightSideView(TreeNode* root) {
+        map<int,int> mp;
+        vector<int> vp;
+        if(root==NULL)
+                return vp;
+        solve(root,vp,mp,0);
+        for(auto &value:mp)
+                vp.push_back(value.second);
+        return vp;
+    }
