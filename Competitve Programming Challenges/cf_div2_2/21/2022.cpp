@@ -40,21 +40,22 @@ void solve()
         cin>>X;
         vp.push_back(X);
     }
-    vector<ll> ok(32,0);
-    for(auto &value:vp)
+    ll cnt = 0;
+    for(int i=1;i<N-1;i++)
     {
-        for(int i=0;i<32;i++)
+        if(vp[i]>vp[i-1]&&vp[i]>vp[i+1])
         {
-            if((value>>i)&1)
-            {
-                ok[i]=1;
-            }
+            cnt++;
+            if(i+2<N)
+                vp[i+1]=max(vp[i],vp[i+2]);
+            else
+                vp[i+1]=vp[i];
         }
     }
-    ll num = 0;
-    for(int i=0;i<32;i++)
+    cout<<cnt<<endl;
+    for(auto &value:vp)
     {
-        num=num+pow(2,i)*ok[i];
+        cout<<value<<" ";
     }
-    cout<<num<<endl;
+    cout<<endl;
 }
