@@ -412,6 +412,88 @@ public:
         return ans;
     }
 };
+
+//In GFG TLE is comming coz of stl ds
+// { Driver Code Starts
+#include<bits/stdc++.h>
+using namespace std;
+
+
+ // } Driver Code Ends
+class Solution{
+    public:
+    int lengthOfLongestSubstring(string s)
+    {
+        int i = 0;
+        int N = s.length();
+        int ans = 0;
+        int j = 0;
+        vector<int> mp(26,0);
+        while (j < N)
+        {
+            mp[s[j]-'a']++;
+            bool flag = false;
+            if (mp[s[j]-'a'] == 2)
+                flag = true;
+
+            if (!flag)
+            {
+                ans = max(ans, j - i + 1);
+                j++;
+            }
+            else if (flag)
+            {
+                while (mp[s[i]-'a'] != 2)
+                {
+                    mp[s[i]-'a']=0;
+                    i++;
+                }
+                mp[s[i]-'a']=1;
+              
+                i++;
+                j++;
+            }
+        }
+        return ans;
+    }
+    int longestUniqueSubsttr(string S){
+        // vector<int> mp(26,0);
+        // int j = 0;int i=0;int ans = 0;
+        // while(j<S.length())
+        // {
+        //     mp[S[j]-'a']++;
+        //     if(mp[S[j]-'a']==2)
+        //     {
+        //         while(S[i]!=S[j])
+        //         {
+        //             mp[S[i]-'a']=0;
+        //             i++;
+        //         }
+                
+        //         mp[S[i]-'a']--;i++;
+        //     }
+        //     ans=max(ans,j-i+1);
+        //     j++;
+        // }
+        // return ans;
+        return lengthOfLongestSubstring(S);
+    }
+};
+
+// { Driver Code Starts.
+int main()
+{
+	int t;
+	cin>>t;
+	while(t--)
+	{
+		string str;
+		cin>>str;
+		Solution ob;
+		cout<<ob.longestUniqueSubsttr(str)<<endl;
+	}
+	return 0;
+}  // } Driver Code Ends
 //https://leetcode.com/problems/minimum-window-substring/submissions/
 //minimum window substring
 class Solution {
