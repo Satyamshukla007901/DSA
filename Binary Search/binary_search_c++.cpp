@@ -203,7 +203,7 @@ int Search(vector<int> arr, int n, int x)
             return mid - 1;
         else if (mid + 1 <= e && arr[mid + 1] == x)
             return mid + 1;
-        else if (arr[mid] <= x)
+        else if (arr[mid] < x)
             start = mid + 2;
         else
             end = mid - 2;
@@ -276,9 +276,9 @@ int findPeakElement(vector<int> &nums)
         else
             high = mid - 1;
     }
-    if (nums[0] > nums[1])
+    if (nums[0] > nums[1])//edge case
         return 0;
-    return n - 1;
+    return n - 1;//edge case
 }
 //Find Maximum Element in a biotonic array(array which is wither increasing or decreasing or both)
 //https://practice.geeksforgeeks.org/problems/maximum-value-in-a-bitonic-array3001/1
@@ -353,6 +353,7 @@ int Solution::solve(vector<int> &A, int B)
 {
     int N = A.size();
     int ok = A[findPeakElement(A)];
+    /*
     if (B <= ok && B >= A[N - 1])
     {
         return rBinarySearch(A, findPeakElement(A), N, B);
@@ -361,6 +362,12 @@ int Solution::solve(vector<int> &A, int B)
     {
         return binarySearch(A, findPeakElement(A), N, B);
     }
+    */
+    int a = rBinarySearch(A, findPeakElement(A), N, B);
+    
+    int b =  binarySearch(A, findPeakElement(A), N, B);
+    if(a!=-1) return a;
+    if(b!=-1) return b;
     return -1;
 }
 //Search in a matrix
