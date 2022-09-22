@@ -255,7 +255,7 @@ vector<int> Solution::slidingMaximum(const vector<int> &A, int B)
     int j = 0;
     int N = A.size();
     vector<int> ok;
-    list<int> st;
+    dequeue<int> st;
 
     while (j < N)
     {
