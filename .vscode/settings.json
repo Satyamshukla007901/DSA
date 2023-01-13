@@ -22,6 +22,8 @@
         "ios": "cpp",
         "xiosbase": "cpp",
         "bitset": "cpp",
-        "set": "cpp"
+        "set": "cpp",
+        "chrono": "cpp",
+        "limits": "cpp"
     }
 }
